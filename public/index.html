@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baking Mellow | Premium Bakery</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .hero {
+            padding: 100px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #fff8f0 0%, #fcf9f6 100%);
+        }
+        .hero h1 { font-size: 64px; color: #3a2c24; margin-bottom: 20px; line-height: 1.1; }
+        .hero h1 span { color: #b69b72; }
+        .hero p { font-size: 18px; color: #5a4c44; max-width: 550px; margin: 0 auto 40px; line-height: 1.6; }
+        .hero-badge {
+            display: inline-block;
+            background: #f0ebe6;
+            color: #3a2c24;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        
+        .hero-img {
+            width: 100%;
+            max-width: 900px;
+            border-radius: 30px;
+            margin: 40px auto;
+            display: block;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+        }
+
+        .section-title { text-align: center; margin-bottom: 50px; }
+        .section-title h2 { font-size: 40px; color: #3a2c24; }
+        .section-title p { color: #7a6f68; margin-top: 10px; font-size: 16px; }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 20px 0 60px;
+        }
+        .card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        }
+        .card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+        .card-img-wrap { height: 280px; overflow: hidden; }
+        .card img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .card:hover img { transform: scale(1.05); }
+        .card-body { padding: 25px 25px 30px; text-align: center; }
+        .card-body h3 { font-size: 22px; margin-bottom: 8px; }
+        .card-body p { color: #7a6f68; font-size: 15px; line-height: 1.5; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-links">
+        <a href="index.html" class="logo">
+            <img src="logo.png" alt="Baking Mellow">
+            <span class="logo-text">Baking Mellow</span>
+        </a>
+        <a href="index.html">Home</a>
+        <a href="menu.html">Menu</a>
+        <a href="about.html">Our Story</a>
+        <a href="social.html">Connect</a>
+        <a href="contact.html">Contact</a>
+    </div>
+    <div class="icons">
+        <a href="signup.html" title="Account">👤</a>
+        <a href="login.html" title="Login">🔑</a>
+        <a href="cart.html" title="Cart">🛒</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="container">
+        <div class="hero-badge">✨ Sargodha's Finest Bakery</div>
+        <h1>Where Every Bite<br><span>Tells a Story</span></h1>
+        <p>Indulge in our handcrafted cakes, fresh pastries, and artisanal desserts. Made from the finest ingredients, baked with passion.</p>
+        <a href="menu.html" class="btn-primary">Explore Our Menu</a>
+        
+        <img src="bm.png" alt="Bakery Banner" class="hero-img">
+    </div>
+</section>
+
+<section class="container">
+    <div class="section-title">
+        <h2>Signature Creations</h2>
+        <p>Designed to make every celebration unforgettable</p>
+    </div>
+    <div class="products-grid">
+        <div class="card">
+            <div class="card-img-wrap"><img src="cakess.png" alt="Custom Cakes"></div>
+            <div class="card-body"><h3>🎂 Custom Cakes</h3><p>Hand-painted & designed for weddings, birthdays & more.</p></div>
+        </div>
+        <div class="card">
+            <div class="card-img-wrap"><img src="cupcakes2.png" alt="Cupcakes"></div>
+            <div class="card-body"><h3>🧁 Artisan Cupcakes</h3><p>Ultra-moist, topped with delicate Swiss buttercream.</p></div>
+        </div>
+        <div class="card">
+            <div class="card-img-wrap"><img src="dounets.png" alt="Donuts"></div>
+            <div class="card-body"><h3>🍩 Dreamy Donuts</h3><p>Freshly fried, hand-glazed with premium toppings.</p></div>
+        </div>
+        <div class="card">
+            <div class="card-img-wrap"><img src="giftbasket.png" alt="Gift Baskets"></div>
+            <div class="card-body"><h3>🎁 Luxury Baskets</h3><p>Curated gourmet hampers for your loved ones.</p></div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <h4>Baking Mellow</h4>
+                <p>Where every celebration is sweeter.</p>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <a href="menu.html">Menu</a><br>
+                <a href="about.html">About Us</a><br>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div>
+                <h4>Contact</h4>
+                <p>📍 Sargodha, Pakistan</p>
+                <p>📞 +92 342 6275592</p>
+                <p>✉️ bakingmellow@gmail.com</p>
+            </div>
+        </div>
+        <div class="footer-copy">© 2025 Baking Mellow. All Rights Reserved.</div>
+    </div>
+</footer>
+
+</body>
+</html>

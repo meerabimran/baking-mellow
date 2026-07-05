@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Your Cart - Baking Mellow</title>
+<link rel="stylesheet" href="style.css">
+<style>
+    .cart-container { max-width: 900px; margin: 50px auto; padding: 0 20px; }
+    h1 { text-align: center; color: #5c4636; margin-bottom: 30px; }
+    table { width: 100%; border-collapse: collapse; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+    th, td { padding: 15px; text-align: center; border-bottom: 1px solid #eee; }
+    th { background: #b69b72; color: white; }
+    .remove { color: #ff4d4d; cursor: pointer; font-weight: bold; transition: 0.3s; }
+    .remove:hover { color: red; transform: scale(1.2); }
+    .total { text-align: right; font-size: 22px; color: #4b2e2e; padding: 20px 10px; font-weight: bold; }
+    .checkout { display: block; width: 200px; margin: 20px auto; text-align: center; padding: 12px; background: #5C4033; color: white; text-decoration: none; border-radius: 30px; transition: 0.3s; }
+    .checkout:hover { background: #b69b72; transform: scale(1.02); }
+    .empty-msg { text-align: center; padding: 40px; color: #888; font-size: 18px; }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-links">
+        <div class="logo"><a href="index.html"><img src="logo.png" alt="Baking Mellow"></a></div>
+        <a href="index.html">Home</a>
+        <a href="menu.html">Menu</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+    </div>
+    <div class="icons">
+        <a href="signup.html">👤</a>
+        <a href="login.html">🔑</a>
+        <a href="cart.html">🛒</a>
+    </div>
+</nav>
+
+<div class="cart-container">
+    <h1>🛒 Your Cart</h1>
+    <table>
+        <thead><tr><th>Product</th><th>Option</th><th>Qty</th><th>Price</th><th>Remove</th></tr></thead>
+        <tbody id="cartItems"></tbody>
+    </table>
+    <div class="total">Total: Rs <span id="totalPrice">0</span></div>
+    <a href="checkout.html" class="checkout">Proceed to Checkout</a>
+</div>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let tbody = document.getElementById("cartItems");
+let total = 0;
+
+if(cart.length === 0) {
+  tbody.innerHTML = `<tr><td colspan="5" class="empty-msg">Your cart is empty. 🧁 <a href="menu.html" style="color:#b69b72;">Shop now!</a></td></tr>`;
+} else {
+  cart.forEach((item, index) => {
+    let row = document.createElement("tr");
+    let itemTotal = item.price * item.qty;
+    total += itemTotal;
+    row.innerHTML = `
+      <td>${item.name}</td><td>${item.option}</td><td>${item.qty}</td>
+      <td>Rs ${itemTotal}</td><td class="remove" onclick="removeItem(${index})">✖</td>`;
+    tbody.appendChild(row);
+  });
+}
+document.getElementById("totalPrice").innerText = total;
+function removeItem(index){ cart.splice(index,1); localStorage.setItem("cart", JSON.stringify(cart)); location.reload(); }
+</script>
+</body>
+</html>

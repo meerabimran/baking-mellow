@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contact Us - Baking Mellow</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .contact-container { max-width: 800px; margin: 50px auto; padding: 0 20px; display: flex; gap: 40px; flex-wrap: wrap; }
+    .contact-box { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); flex: 1; min-width: 300px; }
+    .contact-box h1 { color: #5C4033; text-align: center; margin-bottom: 30px; }
+    input, textarea { width: 100%; padding: 12px; margin-top: 10px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; }
+    button { width: 100%; padding: 15px; background: #5C4033; color: white; border: none; border-radius: 10px; cursor: pointer; font-size: 18px; transition: 0.3s; }
+    button:hover { background: #b69b72; }
+    .contact-info { flex: 1; min-width: 300px; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    .info-item { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; font-size: 18px; }
+    .info-item i { font-size: 24px; color: #b69b72; width: 30px; }
+    #message { padding: 10px; border-radius: 5px; margin-bottom: 15px; display: none; }
+    .error { background: #f8d7da; color: #721c24; }
+    .success { background: #d4edda; color: #155724; }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-links">
+        <div class="logo"><a href="index.html"><img src="logo.png" alt="Baking Mellow"></a></div>
+        <a href="index.html">Home</a>
+        <a href="menu.html">Menu</a>
+        <a href="about.html">About</a>
+        <a href="social.html">Social</a>
+        <a href="contact.html">Contact</a>
+    </div>
+    <div class="icons">
+        <a href="signup.html">👤</a>
+        <a href="login.html">🔑</a>
+        <a href="cart.html">🛒</a>
+    </div>
+</nav>
+
+<div class="contact-container">
+  <div class="contact-box">
+    <h1>📞 Get in Touch</h1>
+    <div id="message"></div>
+    <form id="contactForm">
+      <input type="text" id="name" placeholder="Your Full Name" required>
+      <input type="email" id="email" placeholder="Your Email Address" required>
+      <textarea id="messageText" rows="5" placeholder="How can we help you?" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+  <div class="contact-info">
+    <h2>📍 Reach Us</h2>
+    <div class="info-item"><i>📍</i><p><strong>Address:</strong><br>Sargodha, Pakistan</p></div>
+    <div class="info-item"><i>📞</i><p><strong>Phone:</strong><br>+92 342 6275592</p></div>
+    <div class="info-item"><i>📧</i><p><strong>Email:</strong><br>bakingmellow@gmail.com</p></div>
+    <div class="info-item"><i>🕐</i><p><strong>Working Hours:</strong><br>Mon - Sat: 9:00 AM - 9:00 PM</p></div>
+  </div>
+</div>
+<footer>
+    <p>📍 Sargodha, Pakistan</p>
+    <p>📞 +92 342 6275592 | 📧 bakingmellow@gmail.com</p>
+    <p>© 2025 BakingMellow | Crafted with ❤️</p>
+</footer>
+
+<script>
+  document.getElementById('contactForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('messageText').value;
+    const messageDiv = document.getElementById('message');
+    try {
+      const response = await fetch('/api/contact/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message })
+      });
+      const data = await response.json();
+      if (data.success) {
+        messageDiv.className = 'success';
+        messageDiv.textContent = '✅ Message sent successfully!';
+        messageDiv.style.display = 'block';
+        document.getElementById('contactForm').reset();
+        setTimeout(() => { messageDiv.style.display = 'none'; }, 5000);
+      } else {
+        messageDiv.className = 'error';
+        messageDiv.textContent = data.message || 'Failed to send message.';
+        messageDiv.style.display = 'block';
+      }
+    } catch (error) {
+      messageDiv.className = 'error';
+      messageDiv.textContent = 'Connection error.';
+      messageDiv.style.display = 'block';
+    }
+  });
+</script>
+</body>
+</html>

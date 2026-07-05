@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login - Baking Mellow</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .login-container {
+      background: #D2B48C;
+      width: 350px;
+      margin: 80px auto;
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+    }
+    h1 { color: #5C4033; }
+    label {
+      font-weight: bold;
+      color: #5C4033;
+      display: block;
+      text-align: left;
+      margin-top: 10px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    input[type="submit"] {
+      background: #5C4033;
+      color: white;
+      border: none;
+      margin-top: 15px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+    }
+    input[type="submit"]:hover { background: #3e2a22; }
+    a {
+      display: block;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #5C4033;
+    }
+    #message {
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      display: none;
+    }
+    .error { background: #f8d7da; color: #721c24; }
+    .success { background: #d4edda; color: #155724; }
+  </style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="nav-links">
+    <a href="home.html">Home</a>
+  </div>
+</div>
+
+<div class="login-container">
+  <h1>🔐 Baking Mellow - Login</h1>
+  
+  <div id="message"></div>
+
+  <form id="loginForm">
+    <label>Email:</label>
+    <input type="email" id="email" placeholder="Enter email" required>
+
+    <label>Password:</label>
+    <input type="password" id="password" placeholder="Enter password" required>
+
+    <input type="submit" value="Login">
+
+    <a href="signup.html">Don't have an account? Sign Up</a>
+  </form>
+</div>
+
+<script>
+  document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const messageDiv = document.getElementById('message');
+
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+        credentials: 'include'
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        messageDiv.className = 'success';
+        messageDiv.textContent = 'Login successful! Redirecting...';
+        messageDiv.style.display = 'block';
+        setTimeout(() => {
+          window.location.href = 'home.html';
+        }, 1500);
+      } else {
+        messageDiv.className = 'error';
+        messageDiv.textContent = data.message || 'Login failed';
+        messageDiv.style.display = 'block';
+      }
+    } catch (error) {
+      messageDiv.className = 'error';
+      messageDiv.textContent = 'Connection error. Please try again.';
+      messageDiv.style.display = 'block';
+    }
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout - Baking Mellow</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .checkout-box {
+            background: #fff;
+            width: 100%;
+            max-width: 450px;
+            margin: 50px auto;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        h2 { color: #b69b72; margin-bottom: 10px; }
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .total-row {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #5c4636;
+        }
+        .confirm-btn {
+            background: #5c4636;
+            color: white;
+            border: none;
+            padding: 15px;
+            width: 100%;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: 0.3s;
+        }
+        .confirm-btn:hover { background: #b69b72; }
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #888;
+            font-size: 14px;
+        }
+        #authAlert {
+            display: none;
+            background: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="nav-links">
+            <div class="logo"><a href="home.html"><img src="logo.png" alt="Baking Mellow"></a></div>
+            <a href="home.html">Home</a>
+            <a href="menu.html">Menu</a>
+            <a href="about.html">About Us</a>
+            <a href="social.html">Social Media</a>
+            <a href="contact.html">Contact Us</a>
+        </div>
+        <div class="icons">
+            <a href="signup.html">👤</a>
+            <a href="login.html">🔑</a>
+            <a href="cart.html">🛒</a>
+        </div>
+    </div>
+
+    <div class="checkout-box">
+        <h2>Order Confirmation 🥯</h2>
+        <p>Please review your total before finishing.</p>
+        
+        <div id="summaryList"></div>
+
+        <div class="total-row">
+            Total: Rs <span id="displayTotal">0</span>
+        </div>
+
+        <div id="authAlert">⚠️ Please login to place your order</div>
+
+        <button onclick="processCheckout()" class="confirm-btn">Confirm & Pay</button>
+        <a href="cart.html" class="back-link">Return to Cart</a>
+    </div>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        let grandTotal = 0;
+        const summaryList = document.getElementById("summaryList");
+
+        if(cart.length === 0) {
+            alert("Your cart is empty!");
+            window.location.href = "menu.html";
+        }
+
+        cart.forEach(item => {
+            let itemTotal = item.price * item.qty;
+            grandTotal += itemTotal;
+            summaryList.innerHTML += `
+                <div class="summary-item">
+                    <span>${item.name} (x${item.qty})</span>
+                    <span>Rs ${itemTotal}</span>
+                </div>`;
+        });
+        document.getElementById("displayTotal").innerText = grandTotal;
+
+        async function processCheckout() {
+            const authAlert = document.getElementById("authAlert");
+            
+            // Check if user is logged in
+            const meResponse = await fetch('/api/auth/me', {
+                credentials: 'include'
+            });
+
+            if (!meResponse.ok) {
+                authAlert.style.display = 'block';
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 2000);
+                return;
+            }
+
+            const orderData = {
+                items: cart,
+                total: grandTotal,
+                deliveryAddress: {
+                    street: "Sargodha, Pakistan",
+                    city: "Sargodha",
+                    phone: "+923001234567"
+                }
+            };
+
+            try {
+                const response = await fetch('/api/orders/create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(orderData),
+                    credentials: 'include'
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    alert("🎉 Order placed successfully!");
+                    localStorage.removeItem("cart");
+                    window.location.href = "order_success.html";
+                } else {
+                    alert(result.message || "Something went wrong");
+                }
+            } catch (error) {
+                alert("Connection error. Please try again.");
+            }
+        }
+    </script>
+
+</body>
+</html>

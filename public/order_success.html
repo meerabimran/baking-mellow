@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Order Placed - Baking Mellow</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .box {
+    background: white;
+    width: 60%;
+    max-width: 500px;
+    margin: 80px auto;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+  h1 { color: #b69b72; }
+  .order-details {
+    background: #fdfdfd;
+    padding: 20px;
+    border: 1px dashed #b69b72;
+    border-radius: 10px;
+    margin: 20px 0;
+  }
+  .btn {
+    display: inline-block;
+    margin: 10px 5px;
+    padding: 12px 25px;
+    background: #5c4636;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: 0.3s;
+  }
+  .btn:hover { background: #b69b72; }
+  .btn-secondary { background: #b69b72; }
+  .btn-secondary:hover { background: #5c4636; }
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+  <div class="nav-links">
+    <a href="home.html">Home</a>
+    <a href="menu.html">Menu</a>
+    <a href="about.html">About Us</a>
+    <a href="contact.html">Contact Us</a>
+  </div>
+  <div class="icons">
+    <a href="cart.html">🛒</a>
+  </div>
+</div>
+
+<div class="box">
+  <h1>🎉 Order Placed Successfully!</h1>
+  <p>Thank you for choosing <strong>Baking Mellow</strong>.</p>
+
+  <div class="order-details">
+    <h3>Order Summary</h3>
+    <p>Status: <span style="color: green;">Processing</span></p>
+    <p>Total Paid: <b>Rs <span id="orderTotal">--</span></b></p>
+    <p id="orderDate">Date: --</p>
+  </div>
+
+  <br>
+  <a href="home.html" class="btn">Return to Home</a>
+  <a href="my_orders.html" class="btn btn-secondary">View All Orders</a>
+</div>
+
+<script>
+  // Load order from localStorage if available
+  const lastOrder = JSON.parse(localStorage.getItem('lastOrder'));
+  if (lastOrder) {
+    document.getElementById('orderTotal').textContent = lastOrder.total;
+    document.getElementById('orderDate').textContent = 'Date: ' + new Date(lastOrder.date).toLocaleString();
+  }
+</script>
+
+</body>
+</html>

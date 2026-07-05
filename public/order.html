@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Account – BakingMellow</title>
+<link rel="stylesheet" href="style.css">
+<style>
+    .account-container { max-width: 900px; margin: 50px auto; display: flex; gap: 40px; flex-wrap: wrap; padding: 0 20px; }
+    .box { flex: 1; min-width: 280px; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+    .box h2 { color: #4b2e2e; margin-bottom: 20px; text-align: center; }
+    input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px; }
+    button { width: 100%; padding: 12px; background: #5C4033; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; transition: 0.3s; }
+    button:hover { background: #b69b72; }
+    .note { text-align: center; font-size: 14px; color: #888; margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-links">
+        <div class="logo"><a href="index.html"><img src="logo.jpg" alt="Baking Mellow"></a></div>
+        <a href="index.html">Home</a>
+        <a href="menu.html">Menu</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+    </div>
+    <div class="icons">
+        <a href="order.html">👤</a>
+        <a href="login.html">🔑</a>
+        <a href="cart.html">🛒</a>
+    </div>
+</nav>
+
+<div class="account-container">
+  <div class="box">
+    <h2>🔐 Login</h2>
+    <form action="login.html">
+      <input type="email" placeholder="Email address" required>
+      <input type="password" placeholder="Password" required>
+      <button type="submit">Login</button>
+    </form>
+    <p class="note">Already registered? Login to track your orders.</p>
+  </div>
+  <div class="box">
+    <h2>✨ Create Account</h2>
+    <form action="signup.html">
+      <input type="text" placeholder="Full Name" required>
+      <input type="email" placeholder="Email address" required>
+      <input type="password" placeholder="Create password" required>
+      <button type="submit">Create Account</button>
+    </form>
+    <p class="note">Create an account for faster checkout & order tracking.</p>
+  </div>
+</div>
+
+<footer>
+    <p>📍 Sargodha, Pakistan</p>
+    <p>📞 +92 342 6275592 | 📧 bakingmellow@gmail.com</p>
+    <p>© 2025 BakingMellow | Powered by MEERAB IMRAN</p>
+</footer>
+
+</body>
+</html>
