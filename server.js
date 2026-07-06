@@ -2,38 +2,60 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
 
+// =======================
 // Middleware
+// =======================
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
-app.use(express.static('public'));
 
-// MongoDB Connection
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/baking_mellow')
-  .then(() => console.log('✅ MongoDB Connected'))
-  .catch(err => console.log('❌ MongoDB Error:', err));
+// CORS Configuration
+app.use(cors({
+    origin: true, // Change to your Render URL after deployment if needed
+    credentials: true
+}));
 
-// ✅ CORRECT ROUTE IMPORTS
+// Serve Static Files
+app.use(express.static(path.join(__dirname, 'public')));
+
+// =======================
+// Routes
+// =======================
 const authRoutes = require('./routes/auth');
 const orderRoutes = require('./routes/orders');
 const contactRoutes = require('./routes/contact');
 
-// ✅ CORRECT ROUTE USAGE
 app.use('/api/auth', authRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/contact', contactRoutes);
 
-// Serve frontend
+// =======================
+// Serve Frontend
+// =======================
 app.get('*', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+// =======================
+// MongoDB Connection
+// =======================
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running at http://localhost:${PORT}`);
-});
+
+mongoose
+    .connect(process.env.MONGO_URI)
+    .then(() => {
+        console.log('✅ MongoDB Connected Successfully');
+
+        app.listen(PORT, () => {
+            console.log(`🚀 Server is running on http://localhost:${PORT}`);
+        });
+    })
+    .catch((err) => {
+        console.error('❌ MongoDB Connection Error');
+        console.error(err);
+    });
