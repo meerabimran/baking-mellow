@@ -14,17 +14,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// CORS Configuration
 app.use(cors({
-    origin: true, // Change to your Render URL after deployment if needed
+    origin: true,
     credentials: true
 }));
 
+// =======================
 // Serve Static Files
+// =======================
 app.use(express.static(path.join(__dirname, 'public')));
 
 // =======================
-// Routes
+// API Routes
 // =======================
 const authRoutes = require('./routes/auth');
 const orderRoutes = require('./routes/orders');
@@ -35,7 +36,7 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/contact', contactRoutes);
 
 // =======================
-// Serve Frontend
+// Frontend Routes
 // =======================
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
@@ -44,18 +45,35 @@ app.get('*', (req, res) => {
 // =======================
 // MongoDB Connection
 // =======================
-const PORT = process.env.PORT || 3000;
+let isConnected = false;
 
-mongoose
-    .connect(process.env.MONGO_URI)
-    .then(() => {
+async function connectDB() {
+    if (isConnected) return;
+
+    try {
+        await mongoose.connect(process.env.MONGO_URI);
+        isConnected = true;
         console.log('✅ MongoDB Connected Successfully');
-
-        app.listen(PORT, () => {
-            console.log(`🚀 Server is running on http://localhost:${PORT}`);
-        });
-    })
-    .catch((err) => {
+    } catch (err) {
         console.error('❌ MongoDB Connection Error');
         console.error(err);
+    }
+}
+
+connectDB();
+
+// =======================
+// Local Development
+// =======================
+const PORT = process.env.PORT || 3000;
+
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`🚀 Server running at http://localhost:${PORT}`);
     });
+}
+
+// =======================
+// Export for Vercel
+// =======================
+module.exports = app;
