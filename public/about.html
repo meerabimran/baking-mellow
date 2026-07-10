@@ -3,109 +3,506 @@
 <head>
   <title>About Us - Baking Mellow</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    .about {
+    .about-hero {
       text-align: center;
-      padding: 60px 20px;
+      padding: 80px 20px 60px;
+      background: linear-gradient(135deg, #fcf9f6 0%, #f5efe8 100%);
+    }
+    .about-hero h1 {
+      font-size: 48px;
+      color: #3a2c24;
+      margin-bottom: 15px;
+    }
+    .about-hero h1 span { color: #b69b72; }
+    .about-hero p {
+      font-size: 18px;
+      color: #6a5c54;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    .about-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .story-section {
+      display: flex;
+      gap: 50px;
+      align-items: center;
+      padding: 60px 0;
+      flex-wrap: wrap;
+    }
+    .story-section .text { flex: 1; min-width: 280px; }
+    .story-section .text h2 {
+      font-size: 32px;
+      color: #3a2c24;
+      margin-bottom: 15px;
+    }
+    .story-section .text h2 span { color: #b69b72; }
+    .story-section .text p {
+      color: #5a4c44;
+      line-height: 1.8;
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+    .story-section .img {
+      flex: 1;
+      min-width: 280px;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(58,44,36,0.08);
+    }
+    .story-section .img img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .story-section .img:hover img { transform: scale(1.02); }
+
+    /* Mission & Vision */
+    .mv-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      padding: 40px 0 60px;
+    }
+    .mv-card {
+      background: white;
+      padding: 40px 30px;
+      border-radius: 24px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+      transition: all 0.4s ease;
+      border: 1px solid rgba(0,0,0,0.02);
+    }
+    .mv-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(182,155,114,0.12);
+    }
+    .mv-card .icon { font-size: 48px; margin-bottom: 15px; display: block; }
+    .mv-card h3 { font-size: 24px; color: #3a2c24; margin-bottom: 10px; }
+    .mv-card p { color: #7a6f68; line-height: 1.7; font-size: 15px; }
+
+    /* Timeline */
+    .timeline {
+      padding: 60px 0;
+      position: relative;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: #b69b72;
+      transform: translateX(-50%);
+    }
+    .timeline-item {
+      display: flex;
+      justify-content: flex-end;
+      padding: 20px 0;
+      position: relative;
+      width: 50%;
+    }
+    .timeline-item:nth-child(even) {
+      justify-content: flex-start;
+      margin-left: 50%;
+    }
+    .timeline-item .content {
+      background: white;
+      padding: 20px 30px;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+      max-width: 400px;
+      position: relative;
+      border: 1px solid rgba(0,0,0,0.02);
+    }
+    .timeline-item .content h4 { font-size: 20px; color: #b69b72; margin-bottom: 5px; }
+    .timeline-item .content p { color: #5a4c44; font-size: 14px; line-height: 1.6; }
+    .timeline-item .dot {
+      position: absolute;
+      right: -10px;
+      top: 30px;
+      width: 20px;
+      height: 20px;
+      background: #b69b72;
+      border-radius: 50%;
+      border: 4px solid #fcf9f6;
+      box-shadow: 0 0 0 3px #b69b72;
+    }
+    .timeline-item:nth-child(even) .dot {
+      left: -10px;
+      right: auto;
+    }
+
+    /* FAQ SECTION */
+    .faq-section {
+      padding: 60px 0 80px;
       max-width: 800px;
       margin: 0 auto;
     }
-    .about h1 {
-      font-size: 40px;
-      color: #5C4033;
-      margin-bottom: 20px;
+    .faq-section h2 {
+      text-align: center;
+      font-size: 32px;
+      color: #3a2c24;
+      margin-bottom: 40px;
     }
-    .about p {
-      font-size: 20px;
-      color: #4b2e2e;
-      line-height: 1.8;
-      margin-bottom: 20px;
-    }
-    .about img {
-      width: 200px;
-      border-radius: 50%;
-      margin: 20px 0;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    .values {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      flex-wrap: wrap;
-      margin-top: 40px;
-    }
-    .value-card {
+    .faq-section h2 span { color: #b69b72; }
+    .faq-item {
       background: white;
-      padding: 30px;
-      border-radius: 20px;
-      width: 200px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border-radius: 16px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+      border: 1px solid rgba(0,0,0,0.02);
+      overflow: hidden;
+      transition: 0.3s;
     }
-    .value-card h3 { color: #b69b72; margin-bottom: 10px; }
-    .value-card p { font-size: 14px; color: #555; }
+    .faq-item:hover { box-shadow: 0 8px 25px rgba(0,0,0,0.05); }
+    .faq-question {
+      padding: 18px 24px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+      color: #3a2c24;
+      font-size: 16px;
+      background: #faf8f6;
+      transition: 0.3s;
+    }
+    .faq-question:hover { background: #f5f1ee; }
+    .faq-question .icon {
+      font-size: 20px;
+      transition: transform 0.3s ease;
+      color: #b69b72;
+    }
+    .faq-item.active .faq-question .icon { transform: rotate(45deg); }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s ease;
+      padding: 0 24px;
+      color: #5a4c44;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .faq-item.active .faq-answer {
+      max-height: 300px;
+      padding: 0 24px 24px;
+    }
+
+    @media (max-width: 768px) {
+      .timeline::before { left: 20px; }
+      .timeline-item {
+        width: 100%;
+        justify-content: flex-start;
+        padding-left: 50px;
+      }
+      .timeline-item:nth-child(even) { margin-left: 0; }
+      .timeline-item .dot { left: 12px !important; right: auto !important; }
+      .about-hero h1 { font-size: 34px; }
+      .story-section { flex-direction: column-reverse; }
+    }
   </style>
 </head>
 <body>
 
 <!-- Navbar -->
-<div class="navbar">
+<nav class="navbar">
   <div class="nav-links">
-    <div class="logo"><a href="index.html"><img src="logo.jpg" alt="Baking Mellow"></a></div>
+    <a href="index.html" class="logo">
+      <img src="logo.png" alt="Baking Mellow">
+      <span class="logo-text">Baking Mellow</span>
+    </a>
     <a href="index.html">Home</a>
     <a href="menu.html">Menu</a>
-    <a href="about.html">About Us</a>
-    <a href="social.html">Social Media</a>
-    <a href="contact.html">Contact Us</a>
+    <a href="about.html">Our Story</a>
+    <a href="social.html">Connect</a>
+    <a href="contact.html">Contact</a>
   </div>
   <div class="icons">
     <a href="signup.html">👤</a>
     <a href="login.html">🔑</a>
     <a href="cart.html">🛒</a>
   </div>
+</nav>
+
+<!-- Hero -->
+<div class="about-hero fade-up">
+  <h1>Our <span>Sweet Story</span></h1>
+  <p>From a small home kitchen in Sargodha to a brand loved for its soft cakes, creative cupcakes, dreamy donuts, and elegant bouquets — every treat is made with love.</p>
 </div>
 
-<div class="about">
-  <h1>✨ Our Story</h1>
-  
-  <img src="logo.png" alt="Baking Mellow Logo">
-  
-  <p>
-    <strong>Baking Mellow</strong> was born in Sargodha in 2024 — a small home bakery 
-    that grew into a brand loved for its soft cakes, creative cupcakes, dreamy donuts, 
-    and elegant bouquets.
-  </p>
-  
-  <p>
-    Our mission is simple: <strong>make every celebration sweeter</strong> with fresh, 
-    affordable, beautifully crafted treats.
-  </p>
-  
-  <p>
-    Every product is made with love, care, and the commitment to deliver premium quality. 
-    We believe that the best ingredients create the best memories.
-  </p>
+<div class="about-container">
 
-  <div class="values">
-    <div class="value-card">
-      <h3>❤️ Freshness</h3>
-      <p>Baked daily with the finest ingredients</p>
+  <!-- Story -->
+  <div class="story-section fade-up">
+    <div class="text">
+      <h2>✨ How It <span>All Began</span></h2>
+      <p><strong>Baking Mellow</strong> was born in Sargodha in 2024 — a small home bakery with a big dream. What started as a passion for baking quickly grew into a brand that brings joy to every celebration.</p>
+      <p>Our mission is simple: <strong>make every celebration sweeter</strong> with fresh, affordable, beautifully crafted treats. Every product is made with love, care, and the commitment to deliver premium quality.</p>
+      <p>We believe that the best ingredients create the best memories — and we pour our hearts into every cake, cupcake, donut, brownie, bouquet, and gift basket we make.</p>
     </div>
-    <div class="value-card">
-      <h3>🎨 Creativity</h3>
-      <p>Custom designs for every occasion</p>
-    </div>
-    <div class="value-card">
-      <h3>🤝 Affordability</h3>
-      <p>Premium quality at budget-friendly prices</p>
+    <div class="img">
+      <img src="logo.png" alt="Baking Mellow Story">
     </div>
   </div>
+
+  <!-- Mission & Vision -->
+  <div class="mv-grid fade-up">
+    <div class="mv-card">
+      <span class="icon">🎯</span>
+      <h3>Our Mission</h3>
+      <p>To bring joy and sweetness to every celebration with handcrafted, high-quality, and affordable baked goods that create lasting memories.</p>
+    </div>
+    <div class="mv-card">
+      <span class="icon">🌟</span>
+      <h3>Our Vision</h3>
+      <p>To become Pakistan's most beloved bakery brand, known for creativity, quality, and the warmth of homemade love in every bite.</p>
+    </div>
+    <div class="mv-card">
+      <span class="icon">💎</span>
+      <h3>Our Values</h3>
+      <p>Freshness. Creativity. Affordability. Customer Happiness. And above all — love in every ingredient, every design, and every delivery.</p>
+    </div>
+  </div>
+
+  <!-- Timeline -->
+  <div class="timeline fade-up">
+    <h2 style="text-align: center; font-size: 32px; color: #3a2c24; margin-bottom: 40px;">Our <span style="color:#b69b72;">Journey</span></h2>
+    
+    <div class="timeline-item">
+      <div class="content">
+        <h4>2024 — The Beginning</h4>
+        <p>Baking Mellow started as a small home bakery in Sargodha with just a few cake recipes and a big dream.</p>
+        <div class="dot"></div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="content">
+        <h4>2024 — First Orders</h4>
+        <p>Our first birthday cakes and cupcakes became an instant hit among friends and family. Word started spreading.</p>
+        <div class="dot"></div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="content">
+        <h4>2025 — Growing Brand</h4>
+        <p>We launched our full menu — cakes, cupcakes, donuts, brownies, bouquets, and gift baskets. Our online store took off.</p>
+        <div class="dot"></div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="content">
+        <h4>2025 — Loved by Thousands</h4>
+        <p>Today, Baking Mellow is a trusted name in Sargodha, delivering happiness to thousands of customers every month.</p>
+        <div class="dot"></div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="content">
+        <h4>2026 & Beyond — The Future</h4>
+        <p>We're expanding our menu, launching new collections, and bringing the sweetness of Baking Mellow to more cities.</p>
+        <div class="dot"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ SECTION -->
+  <div class="faq-section fade-up">
+    <h2>Frequently Asked <span>Questions</span></h2>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>What are your delivery areas?</span>
+        <span class="icon">+</span>
+      </div>
+      <div class="faq-answer">
+        We currently deliver across Sargodha and surrounding areas. For specific locations, please contact us via WhatsApp or phone.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>How far in advance should I place a custom cake order?</span>
+        <span class="icon">+</span>
+      </div>
+      <div class="faq-answer">
+        We recommend placing custom orders at least 3–5 days in advance. For large or complex designs, please allow up to 7 days.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>Do you offer gluten-free or vegan options?</span>
+        <span class="icon">+</span>
+      </div>
+      <div class="faq-answer">
+        Yes! We offer gluten-free and vegan versions of most products. Please let us know your dietary requirements when ordering.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>Can I customize the design of my cake?</span>
+        <span class="icon">+</span>
+      </div>
+      <div class="faq-answer">
+        Absolutely! We specialize in custom designs. You can send us your ideas, photos, or themes, and we'll create a cake that perfectly matches your vision.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>What payment methods do you accept?</span>
+        <span class="icon">+</span>
+      </div>
+      <div class="faq-answer">
+        We accept cash on delivery, bank transfers, JazzCash, and EasyPaisa. For online orders, we also support card payments via our secure checkout.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>Do you offer gift wrapping and personalized messages?</span>
+        <span class="icon">+</span>
+      </div>
+      <div class="faq-answer">
+        Yes! All gift baskets and bouquets come with beautiful wrapping. We also offer custom message cards for a personal touch — just mention it in your order.
+      </div>
+    </div>
+  </div>
+
 </div>
 
-<footer>
-  <p>📍 Sargodha, Pakistan</p>
-  <p>📞 +92 3426275592 | 📧 bakingmellow@gmail.com</p>
-  <p>© 2025 BakingMellow | Powered by MEERAB IMRAN</p>
+<!-- IMPROVED FOOTER (Fixed Newsletter Form) -->
+<footer class="footer-improved">
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <h4>Baking Mellow</h4>
+                <p>Freshly baked with love.</p>
+                <p style="margin-top: 12px;">📍 Sargodha, Pakistan</p>
+                <p>📞 +92 342 6275592</p>
+                <p>✉️ bakingmellow@gmail.com</p>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a><br>
+                <a href="menu.html">Menu</a><br>
+                <a href="about.html">About Us</a><br>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div>
+                <h4>Products</h4>
+                <a href="menu.html#cakes">Cakes</a><br>
+                <a href="menu.html#cupcakes">Cupcakes</a><br>
+                <a href="menu.html#donuts">Donuts</a><br>
+                <a href="menu.html#brownies">Brownies</a><br>
+                <a href="menu.html#bouquets">Bouquets</a><br>
+                <a href="menu.html#baskets">Gift Baskets</a>
+            </div>
+            <div>
+                <h4>Stay Sweet 🧁</h4>
+                <p>Subscribe for updates, discounts, and new arrivals.</p>
+                <!-- FIXED: Replaced demo form with working backend form -->
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" id="newsletterEmail" placeholder="Your email" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+                <div class="social-icons">
+                    <a href="https://instagram.com/bakingmellow" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://facebook.com/bakingmellow" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="https://pin.it/5APOlEi2Z" target="_blank"><i class="fab fa-pinterest"></i></a>
+                    <a href="https://wa.me/923426275592" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copy">© 2026 Baking Mellow. Designed by Meerab Imran.</div>
+    </div>
 </footer>
+
+<script>
+  function toggleFaq(element) {
+    const item = element.parentElement;
+    item.classList.toggle('active');
+  }
+</script>
+
+<!-- SCROLL ANIMATION SCRIPT -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const fadeElements = document.querySelectorAll('.fade-up');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        fadeElements.forEach(el => observer.observe(el));
+    });
+</script>
+
+<!-- NEWSLETTER FORM SUBMISSION SCRIPT -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const newsletterForm = document.getElementById('newsletterForm');
+        
+        if (newsletterForm) {
+            newsletterForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const emailInput = document.getElementById('newsletterEmail');
+                const email = emailInput.value.trim();
+                
+                // Basic email validation
+                if (!email || !email.includes('@') || !email.includes('.')) {
+                    alert('⚠️ Please enter a valid email address.');
+                    return;
+                }
+
+                try {
+                    const response = await fetch('/api/newsletter/subscribe', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        alert('✅ ' + data.message);
+                        emailInput.value = ''; // Clear the input
+                    } else {
+                        alert('❌ ' + data.message);
+                    }
+                } catch (error) {
+                    alert('❌ Connection error. Please check your internet and try again.');
+                    console.error('Newsletter error:', error);
+                }
+            });
+        }
+    });
+</script>
 
 </body>
 </html>

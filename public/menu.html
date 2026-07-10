@@ -4,67 +4,151 @@
 <meta charset="UTF-8">
 <title>Menu | Baking Mellow</title>
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
-    .menu-header { text-align: center; padding: 60px 20px 40px; }
+    .menu-header {
+        text-align: center;
+        padding: 60px 20px 30px;
+        background: linear-gradient(135deg, #fcf9f6 0%, #f5efe8 100%);
+    }
     .menu-header h1 { font-size: 48px; color: #3a2c24; }
-    .menu-header p { color: #7a6f68; font-size: 16px; margin-top: 10px; }
+    .menu-header h1 span { color: #b69b72; }
+    .menu-header p { color: #7a6f68; font-size: 16px; max-width: 500px; margin: 10px auto 0; }
 
-    .menu-grid { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 30px; padding-bottom: 80px; }
-    
-    .product-row {
+    .menu-container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+    .category-section {
+        margin-bottom: 70px;
+        scroll-margin-top: 100px;
+    }
+    .category-section h2 {
+        font-size: 34px;
+        color: #3a2c24;
+        border-left: 5px solid #b69b72;
+        padding-left: 18px;
+        margin-bottom: 30px;
         display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .category-section h2 .cat-icon { font-size: 28px; }
+
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 30px;
+    }
+
+    .menu-card {
         background: white;
         border-radius: 24px;
         overflow: hidden;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.03);
-        transition: 0.3s;
-        align-items: center;
-        padding: 20px;
-        gap: 40px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+        transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: 1px solid rgba(0,0,0,0.02);
+        display: flex;
+        flex-direction: column;
     }
-    .product-row:hover { box-shadow: 0 15px 30px rgba(0,0,0,0.06); }
-
-    .product-img {
-        width: 250px;
-        height: 220px;
-        border-radius: 16px;
+    .menu-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 50px rgba(58,44,36,0.08);
+    }
+    .menu-card .img-wrap {
+        height: 200px;
+        overflow: hidden;
+        position: relative;
+    }
+    .menu-card .img-wrap img {
+        width: 100%;
+        height: 100%;
         object-fit: cover;
-        flex-shrink: 0;
+        transition: transform 0.6s ease;
     }
-
-    .product-info { flex: 1; }
-    .product-info h2 { font-size: 26px; color: #3a2c24; margin-bottom: 5px; }
-    .product-info .cat { color: #b69b72; font-weight: 600; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; }
-    .product-info .desc { color: #5a4c44; margin: 12px 0; line-height: 1.6; font-size: 15px; }
-
-    .options { margin: 15px 0; }
-    .options label { display: flex; align-items: center; gap: 10px; margin: 8px 0; cursor: pointer; font-size: 15px; color: #3a2c24; }
-    .options input[type="radio"] { accent-color: #b69b72; width: 18px; height: 18px; }
-
-    .cart-actions {
+    .menu-card:hover .img-wrap img { transform: scale(1.05); }
+    .menu-card .badge {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: #b69b72;
+        color: white;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 4px 14px;
+        border-radius: 30px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .menu-card .body { padding: 20px 24px 24px; flex: 1; display: flex; flex-direction: column; }
+    .menu-card .body h3 { font-size: 20px; color: #3a2c24; margin-bottom: 4px; }
+    .menu-card .body .desc { color: #7a6f68; font-size: 14px; line-height: 1.5; margin-bottom: 12px; flex: 1; }
+    
+    .menu-card .options { margin: 10px 0; }
+    .menu-card .options label {
         display: flex;
         align-items: center;
-        gap: 20px;
-        margin-top: 20px;
+        gap: 10px;
+        margin: 6px 0;
+        cursor: pointer;
+        font-size: 14px;
+        color: #3a2c24;
     }
-    .qty-box { display: flex; align-items: center; gap: 15px; background: #f5f1ee; padding: 8px 18px; border-radius: 30px; }
-    .qty-box button { border: none; background: none; font-size: 22px; cursor: pointer; color: #8b6a4f; }
-    .qty-box span { font-weight: 700; font-size: 18px; min-width: 20px; text-align: center; }
+    .menu-card .options input[type="radio"] { accent-color: #b69b72; width: 16px; height: 16px; }
 
-    .add-btn {
+    .menu-card .cart-actions {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-top: 15px;
+        flex-wrap: wrap;
+    }
+    .menu-card .qty-box {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: #f5f1ee;
+        padding: 6px 16px;
+        border-radius: 30px;
+    }
+    .menu-card .qty-box button {
+        border: none;
+        background: none;
+        font-size: 20px;
+        cursor: pointer;
+        color: #8b6a4f;
+        transition: 0.2s;
+    }
+    .menu-card .qty-box button:hover { color: #3a2c24; transform: scale(1.1); }
+    .menu-card .qty-box span { font-weight: 700; font-size: 16px; min-width: 20px; text-align: center; }
+
+    .menu-card .add-btn {
         background: #3a2c24;
         color: white;
         border: none;
-        padding: 12px 32px;
+        padding: 10px 24px;
         border-radius: 50px;
         cursor: pointer;
         font-weight: 700;
-        font-size: 14px;
-        transition: 0.3s;
+        font-size: 13px;
+        transition: all 0.3s ease;
         text-transform: uppercase;
-        letter-spacing: 1px;
+        letter-spacing: 0.5px;
+        flex: 1;
+        min-width: 100px;
     }
-    .add-btn:hover { background: #b69b72; transform: translateY(-2px); }
+    .menu-card .add-btn:hover { background: #b69b72; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(182,155,114,0.2); }
+
+    .menu-card .price-label {
+        font-weight: 700;
+        color: #b69b72;
+        font-size: 16px;
+        margin: 8px 0;
+    }
+
+    @media (max-width: 768px) {
+        .menu-header h1 { font-size: 34px; }
+        .product-grid { grid-template-columns: 1fr; }
+        .category-section h2 { font-size: 26px; }
+    }
 </style>
 </head>
 <body>
@@ -89,93 +173,607 @@
 </nav>
 
 <div class="menu-header">
-    <h1>Our Curated Menu</h1>
+    <h1>Our <span>Curated Menu</span></h1>
     <p>Choose your favorites. Customize your size. Order with love.</p>
 </div>
 
-<div class="menu-grid">
+<div class="menu-container">
 
-    <!-- Product 1 -->
-    <div class="product-row">
-        <img src="chocake.png" class="product-img">
-        <div class="product-info">
-            <div class="cat">Signature Cakes</div>
-            <h2>Chocolate Dream Cake</h2>
-            <p class="desc">Rich Belgian chocolate fudge layered with silky dark chocolate ganache.</p>
-            <div class="options">
-                <label><input type="radio" name="cake_choco" checked> 1 Pound – Rs 2,000</label>
-                <label><input type="radio" name="cake_choco"> 2 Pound – Rs 4,000</label>
-                <label><input type="radio" name="cake_choco"> 3 Pound – Rs 5,500</label>
+    <!-- ===== CAKES ===== -->
+    <section class="category-section" id="cakes">
+        <h2><span class="cat-icon">🎂</span> Cakes</h2>
+        <div class="product-grid">
+            <div class="menu-card">
+                <div class="img-wrap"><img src="chocake.png" alt="Chocolate Dream Cake"><span class="badge">Best Seller</span></div>
+                <div class="body">
+                    <h3>Chocolate Dream Cake</h3>
+                    <p class="desc">Rich Belgian chocolate fudge layered with silky dark chocolate ganache.</p>
+                    <div class="price-label">Starting at Rs 2,000</div>
+                    <div class="options">
+                        <label><input type="radio" name="cake_choco" checked> 1 Pound – Rs 2,000</label>
+                        <label><input type="radio" name="cake_choco"> 2 Pound – Rs 4,000</label>
+                        <label><input type="radio" name="cake_choco"> 3 Pound – Rs 5,500</label>
+                    </div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Chocolate Dream Cake')">Add to Cart</button>
+                    </div>
+                </div>
             </div>
-            <div class="cart-actions">
-                <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
-                <button class="add-btn" onclick="addToCart(this,'Chocolate Dream Cake')">Add to Cart</button>
+            <div class="menu-card">
+                <div class="img-wrap"><img src="cake.jpeg" alt="Classic Vanilla Cake"></div>
+                <div class="body">
+                    <h3>Classic Vanilla Cake</h3>
+                    <p class="desc">Light Madagascar vanilla sponge layered with velvety buttercream.</p>
+                    <div class="price-label">Starting at Rs 2,000</div>
+                    <div class="options">
+                        <label><input type="radio" name="cake_vanilla" checked> 1 Pound – Rs 2,000</label>
+                        <label><input type="radio" name="cake_vanilla"> 2 Pound – Rs 4,000</label>
+                        <label><input type="radio" name="cake_vanilla"> 3 Pound – Rs 5,500</label>
+                    </div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Classic Vanilla Cake')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card">
+                <div class="img-wrap"><img src="redvelvet.jpg" alt="Red Velvet Cake"></div>
+                <div class="body">
+                    <h3>Red Velvet Cake</h3>
+                    <p class="desc">Velvety red sponge with cream cheese frosting and a hint of cocoa.</p>
+                    <div class="price-label">Starting at Rs 2,200</div>
+                    <div class="options">
+                        <label><input type="radio" name="cake_redvelvet" checked> 1 Pound – Rs 2,200</label>
+                        <label><input type="radio" name="cake_redvelvet"> 2 Pound – Rs 4,400</label>
+                        <label><input type="radio" name="cake_redvelvet"> 3 Pound – Rs 6,000</label>
+                    </div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Red Velvet Cake')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card">
+                <div class="img-wrap"><img src="blackforest.jpg" alt="Black Forest Cake"></div>
+                <div class="body">
+                    <h3>Black Forest Cake</h3>
+                    <p class="desc">Chocolate sponge with cherries, whipped cream, and chocolate shavings.</p>
+                    <div class="price-label">Starting at Rs 2,500</div>
+                    <div class="options">
+                        <label><input type="radio" name="cake_blackforest" checked> 1 Pound – Rs 2,500</label>
+                        <label><input type="radio" name="cake_blackforest"> 2 Pound – Rs 4,800</label>
+                        <label><input type="radio" name="cake_blackforest"> 3 Pound – Rs 6,500</label>
+                    </div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Black Forest Cake')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card">
+                <div class="img-wrap"><img src="lotuscake.jpg" alt="Lotus Cake"></div>
+                <div class="body">
+                    <h3>Lotus Cake</h3>
+                    <p class="desc">Caramelized lotus biscuit sponge with creamy lotus buttercream.</p>
+                    <div class="price-label">Starting at Rs 2,300</div>
+                    <div class="options">
+                        <label><input type="radio" name="cake_lotus" checked> 1 Pound – Rs 2,300</label>
+                        <label><input type="radio" name="cake_lotus"> 2 Pound – Rs 4,500</label>
+                        <label><input type="radio" name="cake_lotus"> 3 Pound – Rs 6,200</label>
+                    </div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Lotus Cake')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card">
+                <div class="img-wrap"><img src="ferrerocake.jpg" alt="Ferrero Cake"></div>
+                <div class="body">
+                    <h3>Ferrero Cake</h3>
+                    <p class="desc">Hazelnut sponge with Nutella filling and crushed hazelnuts.</p>
+                    <div class="price-label">Starting at Rs 2,800</div>
+                    <div class="options">
+                        <label><input type="radio" name="cake_ferrero" checked> 1 Pound – Rs 2,800</label>
+                        <label><input type="radio" name="cake_ferrero"> 2 Pound – Rs 5,200</label>
+                        <label><input type="radio" name="cake_ferrero"> 3 Pound – Rs 7,000</label>
+                    </div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Ferrero Cake')">Add to Cart</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Product 2 -->
-    <div class="product-row">
-        <img src="cake.png" class="product-img">
-        <div class="product-info">
-            <div class="cat">Signature Cakes</div>
-            <h2>Classic Vanilla Cake</h2>
-            <p class="desc">Light Madagascar vanilla sponge layered with velvety buttercream.</p>
-            <div class="options">
-                <label><input type="radio" name="cake1" checked> 1 Pound – Rs 2,000</label>
-                <label><input type="radio" name="cake1"> 2 Pound – Rs 4,000</label>
-                <label><input type="radio" name="cake1"> 3 Pound – Rs 5,500</label>
+    <!-- ===== CUPCAKES ===== -->
+    <section class="category-section" id="cupcakes">
+        <h2><span class="cat-icon">🧁</span> Cupcakes</h2>
+        <div class="product-grid">
+            <div class="menu-card">
+                <div class="img-wrap"><img src="cupcake_choco.jpg" alt="Chocolate Cupcake"><span class="badge">Popular</span></div>
+                <div class="body">
+                    <h3>Chocolate Cupcake</h3>
+                    <p class="desc">Moist chocolate sponge with rich chocolate buttercream.</p>
+                    <div class="price-label">Rs 350 each</div>
+                    <div class="options"><label><input type="radio" name="cup_choco" checked> 1 Piece – Rs 350</label><label><input type="radio" name="cup_choco"> Box of 6 – Rs 2,000</label></div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Chocolate Cupcake')">Add to Cart</button>
+                    </div>
+                </div>
             </div>
-            <div class="cart-actions">
-                <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
-                <button class="add-btn" onclick="addToCart(this,'Classic Vanilla Cake')">Add to Cart</button>
+            <div class="menu-card">
+                <div class="img-wrap"><img src="cupcake_vanilla.jpg" alt="Vanilla Cupcake"></div>
+                <div class="body">
+                    <h3>Vanilla Cupcake</h3>
+                    <p class="desc">Light vanilla sponge with creamy vanilla buttercream.</p>
+                    <div class="price-label">Rs 350 each</div>
+                    <div class="options"><label><input type="radio" name="cup_vanilla" checked> 1 Piece – Rs 350</label><label><input type="radio" name="cup_vanilla"> Box of 6 – Rs 2,000</label></div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Vanilla Cupcake')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card">
+                <div class="img-wrap"><img src="cupcake_redvelvet.jpg" alt="Red Velvet Cupcake"></div>
+                <div class="body">
+                    <h3>Red Velvet Cupcake</h3>
+                    <p class="desc">Red velvet sponge with cream cheese frosting.</p>
+                    <div class="price-label">Rs 400 each</div>
+                    <div class="options"><label><input type="radio" name="cup_redvelvet" checked> 1 Piece – Rs 400</label><label><input type="radio" name="cup_redvelvet"> Box of 6 – Rs 2,300</label></div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Red Velvet Cupcake')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card">
+                <div class="img-wrap"><img src="cupcake_oreo.jpg" alt="Oreo Cupcake"></div>
+                <div class="body">
+                    <h3>Oreo Cupcake</h3>
+                    <p class="desc">Chocolate sponge with Oreo buttercream and crushed Oreo topping.</p>
+                    <div class="price-label">Rs 400 each</div>
+                    <div class="options"><label><input type="radio" name="cup_oreo" checked> 1 Piece – Rs 400</label><label><input type="radio" name="cup_oreo"> Box of 6 – Rs 2,300</label></div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Oreo Cupcake')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card">
+                <div class="img-wrap"><img src="cupcake_lotus.jpg" alt="Lotus Cupcake"></div>
+                <div class="body">
+                    <h3>Lotus Cupcake</h3>
+                    <p class="desc">Biscoff flavored sponge with lotus buttercream and biscuit crumb.</p>
+                    <div class="price-label">Rs 400 each</div>
+                    <div class="options"><label><input type="radio" name="cup_lotus" checked> 1 Piece – Rs 400</label><label><input type="radio" name="cup_lotus"> Box of 6 – Rs 2,300</label></div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Lotus Cupcake')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card">
+                <div class="img-wrap"><img src="cupcake_strawberry.jpg" alt="Strawberry Cupcake"></div>
+                <div class="body">
+                    <h3>Strawberry Cupcake</h3>
+                    <p class="desc">Vanilla sponge with fresh strawberry buttercream and strawberry compote.</p>
+                    <div class="price-label">Rs 380 each</div>
+                    <div class="options"><label><input type="radio" name="cup_strawberry" checked> 1 Piece – Rs 380</label><label><input type="radio" name="cup_strawberry"> Box of 6 – Rs 2,200</label></div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Strawberry Cupcake')">Add to Cart</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- ===== DONUTS ===== -->
+    <section class="category-section" id="donuts">
+        <h2><span class="cat-icon">🍩</span> Donuts</h2>
+        <div class="product-grid">
+            <div class="menu-card">
+                <div class="img-wrap"><img src="donut_choco.jpg" alt="Chocolate Donut"></div>
+                <div class="body">
+                    <h3>Chocolate Donut</h3>
+                    <p class="desc">Classic glazed donut dipped in rich chocolate ganache.</p>
+                    <div class="price-label">Rs 250 each</div>
+                    <div class="options"><label><input type="radio" name="donut_choco" checked> 1 Piece – Rs 250</label><label><input type="radio" name="donut_choco"> Box of 6 – Rs 1,400</label></div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Chocolate Donut')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card">
+                <div class="img-wrap"><img src="donut_oreo.jpg" alt="Oreo Donut"></div>
+                <div class="body">
+                    <h3>Oreo Donut</h3>
+                    <p class="desc">Glazed donut with Oreo crumb topping and vanilla drizzle.</p>
+                    <div class="price-label">Rs 280 each</div>
+                    <div class="options"><label><input type="radio" name="donut_oreo" checked> 1 Piece – Rs 280</label><label><input type="radio" name="donut_oreo"> Box of 6 – Rs 1,500</label></div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Oreo Donut')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card">
+                <div class="img-wrap"><img src="donut_lotus.jpg" alt="Lotus Donut"></div>
+                <div class="body">
+                    <h3>Lotus Donut</h3>
+                    <p class="desc">Glazed donut topped with Biscoff spread and biscuit crumbs.</p>
+                    <div class="price-label">Rs 280 each</div>
+                    <div class="options"><label><input type="radio" name="donut_lotus" checked> 1 Piece – Rs 280</label><label><input type="radio" name="donut_lotus"> Box of 6 – Rs 1,500</label></div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Lotus Donut')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card">
+                <div class="img-wrap"><img src="donut_nutella.jpg" alt="Nutella Donut"></div>
+                <div class="body">
+                    <h3>Nutella Donut</h3>
+                    <p class="desc">Glazed donut filled with Nutella and topped with chocolate glaze.</p>
+                    <div class="price-label">Rs 300 each</div>
+                    <div class="options"><label><input type="radio" name="donut_nutella" checked> 1 Piece – Rs 300</label><label><input type="radio" name="donut_nutella"> Box of 6 – Rs 1,600</label></div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Nutella Donut')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card">
+                <div class="img-wrap"><img src="donut_sprinkles.jpg" alt="Sprinkles Donut"><span class="badge">Colorful</span></div>
+                <div class="body">
+                    <h3>Sprinkles Donut</h3>
+                    <p class="desc">Classic glazed donut with rainbow sprinkles and vanilla glaze.</p>
+                    <div class="price-label">Rs 250 each</div>
+                    <div class="options"><label><input type="radio" name="donut_sprinkles" checked> 1 Piece – Rs 250</label><label><input type="radio" name="donut_sprinkles"> Box of 6 – Rs 1,400</label></div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Sprinkles Donut')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card">
+                <div class="img-wrap"><img src="donut_caramel.jpg" alt="Caramel Donut"></div>
+                <div class="body">
+                    <h3>Caramel Donut</h3>
+                    <p class="desc">Glazed donut with caramel drizzle and sea salt.</p>
+                    <div class="price-label">Rs 270 each</div>
+                    <div class="options"><label><input type="radio" name="donut_caramel" checked> 1 Piece – Rs 270</label><label><input type="radio" name="donut_caramel"> Box of 6 – Rs 1,450</label></div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Caramel Donut')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== BROWNIES ===== -->
+    <section class="category-section" id="brownies">
+        <h2><span class="cat-icon">🍫</span> Brownies</h2>
+        <div class="product-grid">
+            <div class="menu-card">
+                <div class="img-wrap"><img src="brownie_classic.jpg" alt="Classic Brownie"></div>
+                <div class="body">
+                    <h3>Classic Brownie</h3>
+                    <p class="desc">Rich, fudgy chocolate brownie with a classic crackly top.</p>
+                    <div class="price-label">Rs 300 each</div>
+                    <div class="options"><label><input type="radio" name="brownie_classic" checked> 1 Piece – Rs 300</label><label><input type="radio" name="brownie_classic"> Box of 6 – Rs 1,700</label></div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Classic Brownie')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card">
+                <div class="img-wrap"><img src="brownie_walnut.jpg" alt="Walnut Brownie"></div>
+                <div class="body">
+                    <h3>Walnut Brownie</h3>
+                    <p class="desc">Chocolate brownie loaded with crunchy walnuts.</p>
+                    <div class="price-label">Rs 350 each</div>
+                    <div class="options"><label><input type="radio" name="brownie_walnut" checked> 1 Piece – Rs 350</label><label><input type="radio" name="brownie_walnut"> Box of 6 – Rs 2,000</label></div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Walnut Brownie')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card">
+                <div class="img-wrap"><img src="brownie_nutella.jpg" alt="Nutella Brownie"></div>
+                <div class="body">
+                    <h3>Nutella Brownie</h3>
+                    <p class="desc">Fudgy brownie swirled with creamy Nutella.</p>
+                    <div class="price-label">Rs 380 each</div>
+                    <div class="options"><label><input type="radio" name="brownie_nutella" checked> 1 Piece – Rs 380</label><label><input type="radio" name="brownie_nutella"> Box of 6 – Rs 2,100</label></div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Nutella Brownie')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card">
+                <div class="img-wrap"><img src="brownie_fudge.jpg" alt="Fudge Brownie"><span class="badge">Rich</span></div>
+                <div class="body">
+                    <h3>Fudge Brownie</h3>
+                    <p class="desc">Ultra-dense, gooey fudge brownie with melted chocolate chunks.</p>
+                    <div class="price-label">Rs 350 each</div>
+                    <div class="options"><label><input type="radio" name="brownie_fudge" checked> 1 Piece – Rs 350</label><label><input type="radio" name="brownie_fudge"> Box of 6 – Rs 2,000</label></div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Fudge Brownie')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card">
+                <div class="img-wrap"><img src="brownie_oreo.jpg" alt="Oreo Brownie"></div>
+                <div class="body">
+                    <h3>Oreo Brownie</h3>
+                    <p class="desc">Fudgy brownie topped with Oreo pieces and white chocolate drizzle.</p>
+                    <div class="price-label">Rs 380 each</div>
+                    <div class="options"><label><input type="radio" name="brownie_oreo" checked> 1 Piece – Rs 380</label><label><input type="radio" name="brownie_oreo"> Box of 6 – Rs 2,100</label></div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Oreo Brownie')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== BOUQUETS ===== -->
+    <section class="category-section" id="bouquets">
+        <h2><span class="cat-icon">💐</span> Bouquets</h2>
+        <div class="product-grid">
+            <div class="menu-card">
+                <div class="img-wrap"><img src="bouquet_ferrero.jpg" alt="Chocolate Bouquet"></div>
+                <div class="body">
+                    <h3>Chocolate Bouquet</h3>
+                    <p class="desc">A beautiful bouquet made of assorted chocolate bars and truffles.</p>
+                    <div class="price-label">Rs 2,500</div>
+                    <div class="options"><label><input type="radio" name="bqt_choco" checked> Standard – Rs 2,500</label><label><input type="radio" name="bqt_choco"> Premium – Rs 4,000</label></div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Chocolate Bouquet')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card">
+                <div class="img-wrap"><img src="bouquet_choco.jpg" alt="Ferrero Bouquet"></div>
+                <div class="body">
+                    <h3>Ferrero Bouquet</h3>
+                    <p class="desc">Elegant bouquet made of Ferrero Rocher chocolates.</p>
+                    <div class="price-label">Rs 3,000</div>
+                    <div class="options"><label><input type="radio" name="bqt_ferrero" checked> Standard – Rs 3,000</label><label><input type="radio" name="bqt_ferrero"> Premium – Rs 4,500</label></div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Ferrero Bouquet')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card">
+                <div class="img-wrap"><img src="bouquet_mixed.jpg" alt="Mixed Donut Bouquet"><span class="badge">Best Seller</span></div>
+                <div class="body">
+                    <h3>Mixed Donut Bouquet</h3>
+                    <p class="desc">A variety of donuts beautifully arranged in a bouquet.</p>
+                    <div class="price-label">Rs 3,500</div>
+                    <div class="options"><label><input type="radio" name="bqt_mixed" checked> Standard – Rs 3,500</label><label><input type="radio" name="bqt_mixed"> Premium – Rs 5,000</label></div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Mixed Donut Bouquet')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card">
+                <div class="img-wrap"><img src="bouquet_rose.jpg" alt="Rose Bouquet"></div>
+                <div class="body">
+                    <h3>Rose Bouquet</h3>
+                    <p class="desc">Classic red roses with chocolate accents and decorative wrapping.</p>
+                    <div class="price-label">Rs 2,800</div>
+                    <div class="options"><label><input type="radio" name="bqt_rose" checked> Standard – Rs 2,800</label><label><input type="radio" name="bqt_rose"> Premium – Rs 4,200</label></div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Rose Bouquet')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card">
+                <div class="img-wrap"><img src="bouquet_custom.jpg" alt="Customized Bouquet"></div>
+                <div class="body">
+                    <h3>Customized Bouquet</h3>
+                    <p class="desc">Create your own bouquet with your favorite chocolates and flowers.</p>
+                    <div class="price-label">Starting at Rs 3,500</div>
+                    <div class="options"><label><input type="radio" name="bqt_custom" checked> Custom – Rs 3,500+</label></div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Customized Bouquet')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== GIFT BASKETS ===== -->
+    <section class="category-section" id="baskets">
+        <h2><span class="cat-icon">🎁</span> Gift Baskets</h2>
+        <div class="product-grid">
+            <div class="menu-card">
+                <div class="img-wrap"><img src="basket_chocolate.jpg" alt="Chocolate Basket"></div>
+                <div class="body">
+                    <h3>Chocolate Basket</h3>
+                    <p class="desc">A basket filled with assorted premium chocolates and truffles.</p>
+                    <div class="price-label">Rs 4,500</div>
+                    <div class="options"><label><input type="radio" name="basket_choco" checked> Standard – Rs 4,500</label><label><input type="radio" name="basket_choco"> Premium – Rs 6,500</label></div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Chocolate Basket')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card">
+                <div class="img-wrap"><img src="giftbasket.png" alt="Snack Basket"></div>
+                <div class="body">
+                    <h3>Snack Basket</h3>
+                    <p class="desc">Curated basket of sweet and savory snacks for any occasion.</p>
+                    <div class="price-label">Rs 3,800</div>
+                    <div class="options"><label><input type="radio" name="basket_snack" checked> Standard – Rs 3,800</label><label><input type="radio" name="basket_snack"> Premium – Rs 5,500</label></div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Snack Basket')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card">
+                <div class="img-wrap"><img src="basket_birthday.jpg" alt="Birthday Basket"><span class="badge">Popular</span></div>
+                <div class="body">
+                    <h3>Birthday Basket</h3>
+                    <p class="desc">Special basket with birthday treats, candles, and decorations.</p>
+                    <div class="price-label">Rs 5,000</div>
+                    <div class="options"><label><input type="radio" name="basket_birthday" checked> Standard – Rs 5,000</label><label><input type="radio" name="basket_birthday"> Premium – Rs 7,000</label></div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Birthday Basket')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card">
+                <div class="img-wrap"><img src="basket.png" alt="Luxury Basket"></div>
+                <div class="body">
+                    <h3>Luxury Basket</h3>
+                    <p class="desc">Premium gourmet basket with fine chocolates, wines, and more.</p>
+                    <div class="price-label">Rs 8,000</div>
+                    <div class="options"><label><input type="radio" name="basket_luxury" checked> Standard – Rs 8,000</label><label><input type="radio" name="basket_luxury"> Premium – Rs 12,000</label></div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Luxury Basket')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card">
+                <div class="img-wrap"><img src="basket_custom.jpg" alt="Customized Basket"></div>
+                <div class="body">
+                    <h3>Customized Basket</h3>
+                    <p class="desc">Build your own gift basket with your favorite items.</p>
+                    <div class="price-label">Starting at Rs 4,000</div>
+                    <div class="options"><label><input type="radio" name="basket_custom" checked> Custom – Rs 4,000+</label></div>
+                    <div class="cart-actions">
+                        <div class="qty-box"><button onclick="changeQty(this,-1)">−</button><span>1</span><button onclick="changeQty(this,1)">+</button></div>
+                        <button class="add-btn" onclick="addToCart(this,'Customized Basket')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 </div>
 
-<footer>
+<footer class="footer-improved">
     <div class="container">
         <div class="footer-grid">
             <div>
                 <h4>Baking Mellow</h4>
-                <p>Where every celebration is sweeter.</p>
+                <p>Freshly baked with love.</p>
+                <p style="margin-top: 12px;">📍 Sargodha, Pakistan</p>
+                <p>📞 +92 342 6275592</p>
+                <p>✉️ bakingmellow@gmail.com</p>
             </div>
             <div>
                 <h4>Quick Links</h4>
+                <a href="index.html">Home</a><br>
                 <a href="menu.html">Menu</a><br>
                 <a href="about.html">About Us</a><br>
                 <a href="contact.html">Contact</a>
             </div>
             <div>
-                <h4>Contact</h4>
-                <p>📍 Sargodha, Pakistan</p>
-                <p>📞 +92 342 6275592</p>
-                <p>✉️ bakingmellow@gmail.com</p>
+                <h4>Products</h4>
+                <a href="menu.html#cakes">Cakes</a><br>
+                <a href="menu.html#cupcakes">Cupcakes</a><br>
+                <a href="menu.html#donuts">Donuts</a><br>
+                <a href="menu.html#brownies">Brownies</a><br>
+                <a href="menu.html#bouquets">Bouquets</a><br>
+                <a href="menu.html#baskets">Gift Baskets</a>
+            </div>
+            <div>
+                <h4>Stay Sweet 🧁</h4>
+                <p>Subscribe for updates, discounts, and new arrivals.</p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" id="newsletterEmail" placeholder="Your email" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+                <div class="social-icons">
+                    <a href="https://instagram.com/bakingmellow" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://facebook.com/bakingmellow" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="https://pin.it/5APOlEi2Z" target="_blank"><i class="fab fa-pinterest"></i></a>
+                    <a href="https://wa.me/923426275592" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                </div>
             </div>
         </div>
-        <div class="footer-copy">© 2025 Baking Mellow. All Rights Reserved.</div>
+        <div class="footer-copy">© 2026 Baking Mellow. Designed by Meerab Imran.</div>
     </div>
 </footer>
 
 <script>
-function changeQty(btn, value) {
-  let span = btn.parentElement.querySelector("span");
-  let qty = parseInt(span.innerText) + value;
-  if (qty < 1) qty = 1;
-  span.innerText = qty;
-}
-function addToCart(btn, name) {
-  const row = btn.closest(".product-row");
-  const qty = parseInt(row.querySelector(".qty-box span").innerText);
-  const selectedOption = row.querySelector("input[type=radio]:checked").parentElement.innerText;
-  let price = parseInt(selectedOption.match(/\d+/g).join(""));
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  cart.push({ name: name, option: selectedOption, price: price, qty: qty });
-  localStorage.setItem("cart", JSON.stringify(cart));
-  alert("✅ Added to your cart!");
-}
+    function changeQty(btn, value) {
+        let span = btn.parentElement.querySelector("span");
+        let qty = parseInt(span.innerText) + value;
+        if (qty < 1) qty = 1;
+        span.innerText = qty;
+    }
+
+    function addToCart(btn, name) {
+        const row = btn.closest(".menu-card");
+        const qty = parseInt(row.querySelector(".qty-box span").innerText);
+        const selectedOption = row.querySelector("input[type=radio]:checked").parentElement.innerText;
+        let price = parseInt(selectedOption.match(/\d+/g).join(""));
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        cart.push({ name: name, option: selectedOption, price: price, qty: qty });
+        localStorage.setItem("cart", JSON.stringify(cart));
+        alert("✅ Added to your cart!");
+    }
 </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const newsletterForm = document.getElementById('newsletterForm');
+        if (newsletterForm) {
+            newsletterForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const emailInput = document.getElementById('newsletterEmail');
+                const email = emailInput.value.trim();
+                if (!email || !email.includes('@') || !email.includes('.')) {
+                    alert('⚠️ Please enter a valid email address.');
+                    return;
+                }
+                try {
+                    const response = await fetch('/api/newsletter/subscribe', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email })
+                    });
+                    const data = await response.json();
+                    if (data.success) {
+                        alert('✅ ' + data.message);
+                        emailInput.value = '';
+                    } else {
+                        alert('❌ ' + data.message);
+                    }
+                } catch (error) {
+                    alert('❌ Connection error. Please check your internet and try again.');
+                    console.error('Newsletter error:', error);
+                }
+            });
+        }
+    });
+</script>
+
 </body>
 </html>

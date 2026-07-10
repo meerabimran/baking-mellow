@@ -5,65 +5,452 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Baking Mellow | Premium Bakery</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
+        /* --- HERO SECTION (Background Image) --- */
         .hero {
-            padding: 100px 20px;
+            padding: 120px 20px 100px;
             text-align: center;
-            background: linear-gradient(135deg, #fff8f0 0%, #fcf9f6 100%);
+            position: relative;
+            overflow: hidden;
+            min-height: 550px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* Background image applied here */
+            background-image: url('bm.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
         }
-        .hero h1 { font-size: 64px; color: #3a2c24; margin-bottom: 20px; line-height: 1.1; }
-        .hero h1 span { color: #b69b72; }
-        .hero p { font-size: 18px; color: #5a4c44; max-width: 550px; margin: 0 auto 40px; line-height: 1.6; }
+        /* Cream overlay for readability */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(252, 249, 246, 0.88);
+            backdrop-filter: blur(4px);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+        }
         .hero-badge {
             display: inline-block;
-            background: #f0ebe6;
+            background: #b69b72;
+            color: white;
+            padding: 8px 24px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(182,155,114,0.3);
+        }
+        .hero h1 {
+            font-size: 56px;
             color: #3a2c24;
-            padding: 8px 18px;
-            border-radius: 30px;
-            font-size: 12px;
+            margin-bottom: 20px;
+            line-height: 1.15;
+            font-weight: 700;
+        }
+        .hero h1 span { color: #b69b72; position: relative; }
+        .hero h1 span::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: rgba(182,155,114,0.2);
+            border-radius: 10px;
+        }
+        .hero p {
+            font-size: 18px;
+            color: #5a4c44;
+            max-width: 600px;
+            margin: 0 auto 35px;
+            line-height: 1.8;
+            font-weight: 500;
+        }
+        .hero-buttons { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        .hero-buttons .btn-primary {
+            padding: 16px 40px;
+            background: #3a2c24;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 15px;
             font-weight: 700;
             letter-spacing: 1px;
+            text-decoration: none;
             text-transform: uppercase;
-            margin-bottom: 20px;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 15px rgba(58,44,36,0.15);
         }
-        
-        .hero-img {
-            width: 100%;
-            max-width: 900px;
-            border-radius: 30px;
-            margin: 40px auto;
+        .hero-buttons .btn-primary:hover {
+            background: #b69b72;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(182,155,114,0.3);
+        }
+        .hero-buttons .btn-secondary {
+            padding: 16px 40px;
+            background: transparent;
+            color: #3a2c24;
+            border: 2px solid #3a2c24;
+            border-radius: 50px;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: all 0.4s ease;
+        }
+        .hero-buttons .btn-secondary:hover {
+            background: #3a2c24;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(58,44,36,0.2);
+        }
+
+        /* --- SECTION TITLES --- */
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        .section-title h2 {
+            font-size: 38px;
+            color: #3a2c24;
+            font-weight: 700;
+        }
+        .section-title h2 span { color: #b69b72; }
+        .section-title p {
+            color: #7a6f68;
+            margin-top: 12px;
+            font-size: 16px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .section-title::after {
+            content: '';
             display: block;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+            width: 60px;
+            height: 3px;
+            background: #b69b72;
+            margin: 15px auto 0;
+            border-radius: 10px;
         }
 
-        .section-title { text-align: center; margin-bottom: 50px; }
-        .section-title h2 { font-size: 40px; color: #3a2c24; }
-        .section-title p { color: #7a6f68; margin-top: 10px; font-size: 16px; }
+        /* --- CATEGORIES --- */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 20px;
+            padding: 20px 0 40px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .category-card {
+            background: white;
+            padding: 25px 15px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+            color: #3a2c24;
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+        .category-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(182,155,114,0.15);
+            border-color: #b69b72;
+        }
+        .category-card .icon { font-size: 40px; margin-bottom: 10px; display: block; }
+        .category-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+        .category-card p { font-size: 12px; color: #7a6f68; margin: 0; }
+        .category-card .badge {
+            display: inline-block;
+            background: #b69b72;
+            color: white;
+            font-size: 10px;
+            padding: 2px 12px;
+            border-radius: 20px;
+            margin-top: 8px;
+            font-weight: 700;
+        }
 
+        /* --- PRODUCT GRID --- */
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 30px;
-            padding: 20px 0 60px;
+            padding: 20px 0 40px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        .card {
+        .product-card {
             background: white;
             border-radius: 24px;
             overflow: hidden;
             transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            border: 1px solid rgba(0,0,0,0.02);
+            position: relative;
+            display: flex;
+            flex-direction: column;
         }
-        .card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
-        .card-img-wrap { height: 280px; overflow: hidden; }
-        .card img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        .card:hover img { transform: scale(1.05); }
-        .card-body { padding: 25px 25px 30px; text-align: center; }
-        .card-body h3 { font-size: 22px; margin-bottom: 8px; }
-        .card-body p { color: #7a6f68; font-size: 15px; line-height: 1.5; }
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(58,44,36,0.08);
+        }
+        .product-card .badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: #b69b72;
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 5px 14px;
+            border-radius: 30px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 2;
+        }
+        .product-card .badge.new { background: #e67e22; }
+        .product-card .badge.best { background: #b69b72; }
+        .product-card .img-wrap {
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+        .product-card .img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .product-card:hover .img-wrap img { transform: scale(1.05); }
+        .product-card .body {
+            padding: 22px 24px 28px;
+            text-align: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-card .body h3 { font-size: 20px; margin-bottom: 5px; color: #3a2c24; }
+        .product-card .body .desc {
+            color: #7a6f68;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 10px;
+            flex: 1;
+        }
+        .product-card .body .price {
+            font-size: 20px;
+            font-weight: 700;
+            color: #b69b72;
+            margin: 10px 0;
+        }
+        .product-card .body .btn-small {
+            padding: 10px 20px;
+            background: #3a2c24;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            align-self: center;
+        }
+        .product-card .body .btn-small:hover {
+            background: #b69b72;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(182,155,114,0.2);
+        }
+        .product-card .stars {
+            color: #f5c518;
+            font-size: 14px;
+            margin: 5px 0 10px;
+            letter-spacing: 2px;
+        }
+
+        /* --- WHY CHOOSE US --- */
+        .why-us {
+            background: #f5efe8;
+            padding: 70px 20px;
+            margin-top: 40px;
+        }
+        .why-us-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .why-item {
+            text-align: center;
+            padding: 30px 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            transition: 0.3s;
+        }
+        .why-item:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.06); }
+        .why-item .icon { font-size: 40px; margin-bottom: 12px; display: block; }
+        .why-item h4 { font-size: 18px; margin-bottom: 5px; color: #3a2c24; }
+        .why-item p { font-size: 14px; color: #7a6f68; line-height: 1.5; }
+
+        /* --- REVIEWS --- */
+        .reviews-section { padding: 60px 20px; max-width: 1100px; margin: 0 auto; }
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        .review-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            border: 1px solid rgba(0,0,0,0.02);
+            text-align: center;
+            transition: 0.3s;
+        }
+        .review-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.06); }
+        .review-card .stars { font-size: 18px; color: #f5c518; margin-bottom: 10px; }
+        .review-card p { font-size: 15px; color: #5a4c44; line-height: 1.6; font-style: italic; }
+        .review-card .author { margin-top: 12px; font-weight: 700; color: #3a2c24; font-size: 14px; }
+
+        /* --- SCROLL ANIMATIONS --- */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- IMPROVED FOOTER --- */
+        .footer-improved {
+            background: #1a1410;
+            color: #d1c7c0;
+            padding: 70px 20px 30px;
+            margin-top: 80px;
+        }
+        .footer-improved .container { max-width: 1200px; margin: 0 auto; }
+        .footer-improved .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            margin-bottom: 30px;
+        }
+        .footer-improved h4 { color: white; font-size: 18px; margin-bottom: 20px; }
+        .footer-improved p, .footer-improved a { line-height: 1.8; font-size: 14px; color: #b0a59d; text-decoration: none; }
+        .footer-improved a:hover { color: #b69b72; }
+        .footer-improved .social-icons {
+            display: flex;
+            gap: 18px;
+            margin-top: 15px;
+        }
+        .footer-improved .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+            color: #d1c7c0;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+        .footer-improved .social-icons a:hover {
+            background: #b69b72;
+            color: white;
+            transform: translateY(-3px);
+        }
+        .footer-improved .newsletter-form {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        .footer-improved .newsletter-form input {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            min-width: 150px;
+            outline: none;
+            background: rgba(255,255,255,0.08);
+            color: white;
+        }
+        .footer-improved .newsletter-form input::placeholder { color: #8a7a70; }
+        .footer-improved .newsletter-form button {
+            padding: 12px 24px;
+            background: #b69b72;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .footer-improved .newsletter-form button:hover {
+            background: #d4b896;
+            transform: translateY(-2px);
+        }
+        .footer-improved .footer-copy {
+            text-align: center;
+            font-size: 13px;
+            color: #7a6f68;
+            padding-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .hero { min-height: 400px; padding: 80px 20px; }
+            .hero h1 { font-size: 36px; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .hero-buttons .btn-primary, .hero-buttons .btn-secondary { width: 100%; max-width: 300px; }
+            .categories-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+            .category-card { padding: 18px 10px; }
+            .category-card .icon { font-size: 30px; }
+            .category-card h3 { font-size: 13px; }
+            .products-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+            .why-us-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-improved .newsletter-form { flex-direction: column; }
+            .footer-improved .newsletter-form input { width: 100%; }
+        }
+        @media (max-width: 480px) {
+            .categories-grid { grid-template-columns: repeat(2, 1fr); }
+            .hero h1 { font-size: 28px; }
+        }
     </style>
 </head>
 <body>
 
+<!-- NAVBAR -->
 <nav class="navbar">
     <div class="nav-links">
         <a href="index.html" class="logo">
@@ -83,65 +470,321 @@
     </div>
 </nav>
 
-<section class="hero">
-    <div class="container">
+<!-- HERO SECTION (Background Image Applied) -->
+<section class="hero fade-up">
+    <div class="hero-content">
         <div class="hero-badge">✨ Sargodha's Finest Bakery</div>
-        <h1>Where Every Bite<br><span>Tells a Story</span></h1>
-        <p>Indulge in our handcrafted cakes, fresh pastries, and artisanal desserts. Made from the finest ingredients, baked with passion.</p>
-        <a href="menu.html" class="btn-primary">Explore Our Menu</a>
-        
-        <img src="bm.png" alt="Bakery Banner" class="hero-img">
+        <h1>Freshly Baked Happiness,<br><span>Made Just for You</span></h1>
+        <p>At Baking Mellow, every cake, cupcake, donut, brownie, bouquet, and gift basket is handcrafted with love using premium ingredients. Whether it's a birthday, wedding, anniversary, or a simple sweet craving — we're here to make every moment memorable.</p>
+        <div class="hero-buttons">
+            <a href="menu.html" class="btn-primary">Order Now</a>
+            <a href="menu.html" class="btn-secondary">View Menu</a>
+        </div>
     </div>
 </section>
 
-<section class="container">
+<!-- FEATURED CATEGORIES -->
+<section class="container fade-up" style="padding-top: 20px;">
     <div class="section-title">
-        <h2>Signature Creations</h2>
-        <p>Designed to make every celebration unforgettable</p>
+        <h2>Explore Our <span>Categories</span></h2>
+        <p>Handcrafted delights for every celebration</p>
+    </div>
+    <div class="categories-grid">
+        <a href="menu.html#cakes" class="category-card">
+            <span class="icon">🎂</span>
+            <h3>Custom Cakes</h3>
+            <p>Elegant cakes for every celebration</p>
+            <span class="badge">Popular</span>
+        </a>
+        <a href="menu.html#cupcakes" class="category-card">
+            <span class="icon">🧁</span>
+            <h3>Cupcakes</h3>
+            <p>Soft, creamy, freshly baked</p>
+            <span class="badge">Best Seller</span>
+        </a>
+        <a href="menu.html#donuts" class="category-card">
+            <span class="icon">🍩</span>
+            <h3>Donuts</h3>
+            <p>Glazed and delicious</p>
+            <span class="badge">New</span>
+        </a>
+        <a href="menu.html#brownies" class="category-card">
+            <span class="icon">🍫</span>
+            <h3>Brownies</h3>
+            <p>Rich chocolate indulgence</p>
+        </a>
+        <a href="menu.html#bouquets" class="category-card">
+            <span class="icon">💐</span>
+            <h3>Bouquets</h3>
+            <p>Sweet edible bouquets</p>
+        </a>
+        <a href="menu.html#baskets" class="category-card">
+            <span class="icon">🎁</span>
+            <h3>Gift Baskets</h3>
+            <p>Perfect surprise gifts</p>
+        </a>
+    </div>
+</section>
+
+<!-- BEST SELLERS -->
+<section class="container fade-up">
+    <div class="section-title">
+        <h2>⭐ Best <span>Sellers</span></h2>
+        <p>Our most loved creations — order yours today</p>
     </div>
     <div class="products-grid">
-        <div class="card">
-            <div class="card-img-wrap"><img src="cakess.png" alt="Custom Cakes"></div>
-            <div class="card-body"><h3>🎂 Custom Cakes</h3><p>Hand-painted & designed for weddings, birthdays & more.</p></div>
+        <div class="product-card">
+            <span class="badge best">⭐ Best Seller</span>
+            <div class="img-wrap"><img src="chocake.png" alt="Chocolate Dream Cake"></div>
+            <div class="body">
+                <h3>Chocolate Dream Cake</h3>
+                <div class="stars">★★★★★</div>
+                <p class="desc">Rich Belgian chocolate fudge layered with silky dark chocolate ganache.</p>
+                <div class="price">Rs 2,000</div>
+                <a href="menu.html#cakes" class="btn-small">Order Now</a>
+            </div>
         </div>
-        <div class="card">
-            <div class="card-img-wrap"><img src="cupcakes2.png" alt="Cupcakes"></div>
-            <div class="card-body"><h3>🧁 Artisan Cupcakes</h3><p>Ultra-moist, topped with delicate Swiss buttercream.</p></div>
+        <div class="product-card">
+            <span class="badge best">🔥 Trending</span>
+            <div class="img-wrap"><img src="cake.jpeg" alt="Classic Vanilla Cake"></div>
+            <div class="body">
+                <h3>Classic Vanilla Cake</h3>
+                <div class="stars">★★★★★</div>
+                <p class="desc">Light Madagascar vanilla sponge layered with velvety buttercream.</p>
+                <div class="price">Rs 2,000</div>
+                <a href="menu.html#cakes" class="btn-small">Order Now</a>
+            </div>
         </div>
-        <div class="card">
-            <div class="card-img-wrap"><img src="dounets.png" alt="Donuts"></div>
-            <div class="card-body"><h3>🍩 Dreamy Donuts</h3><p>Freshly fried, hand-glazed with premium toppings.</p></div>
+        <div class="product-card">
+            <span class="badge best">🏆 Top Rated</span>
+            <div class="img-wrap"><img src="cupcakes2.png" alt="Artisan Cupcakes"></div>
+            <div class="body">
+                <h3>Artisan Cupcakes</h3>
+                <div class="stars">★★★★★</div>
+                <p class="desc">Ultra-moist, topped with delicate Swiss buttercream and premium toppings.</p>
+                <div class="price">Rs 1,500</div>
+                <a href="menu.html#cupcakes" class="btn-small">Order Now</a>
+            </div>
         </div>
-        <div class="card">
-            <div class="card-img-wrap"><img src="giftbasket.png" alt="Gift Baskets"></div>
-            <div class="card-body"><h3>🎁 Luxury Baskets</h3><p>Curated gourmet hampers for your loved ones.</p></div>
+        <div class="product-card">
+            <div class="img-wrap"><img src="dounets.png" alt="Dreamy Donuts"></div>
+            <div class="body">
+                <h3>Dreamy Donuts</h3>
+                <div class="stars">★★★★☆</div>
+                <p class="desc">Freshly fried, hand-glazed with premium toppings and love.</p>
+                <div class="price">Rs 1,200</div>
+                <a href="menu.html#donuts" class="btn-small">Order Now</a>
+            </div>
         </div>
     </div>
 </section>
 
-<footer>
+<!-- NEW ARRIVALS -->
+<section class="container fade-up">
+    <div class="section-title">
+        <h2>✨ New <span>Arrivals</span></h2>
+        <p>Fresh from our kitchen — try our latest creations</p>
+    </div>
+    <div class="products-grid">
+        <div class="product-card">
+            <span class="badge new">🆕 New</span>
+            <div class="img-wrap"><img src="brownies.png" alt="Fudge Brownies"></div>
+            <div class="body">
+                <h3>Fudge Brownies</h3>
+                <div class="stars">★★★★★</div>
+                <p class="desc">Rich, fudgy, chocolate-packed brownies with a crackly top — a new favorite!</p>
+                <div class="price">Rs 1,000</div>
+                <a href="menu.html#brownies" class="btn-small">Order Now</a>
+            </div>
+        </div>
+        <div class="product-card">
+            <span class="badge new">🆕 New</span>
+            <div class="img-wrap"><img src="giftbasket.png" alt="Luxury Gift Basket"></div>
+            <div class="body">
+                <h3>Luxury Gift Basket</h3>
+                <div class="stars">★★★★★</div>
+                <p class="desc">Curated gourmet hampers for your loved ones — a sweet surprise just launched.</p>
+                <div class="price">Rs 3,500</div>
+                <a href="menu.html#baskets" class="btn-small">Order Now</a>
+            </div>
+        </div>
+        <div class="product-card">
+            <span class="badge new">🆕 New</span>
+            <div class="img-wrap"><img src="redvelvet.jpg" alt="Red Velvet Cake"></div>
+            <div class="body">
+                <h3>Red Velvet Cake</h3>
+                <div class="stars">★★★★★</div>
+                <p class="desc">Velvety red sponge with cream cheese frosting — our newest cake addition.</p>
+                <div class="price">Rs 2,200</div>
+                <a href="menu.html#cakes" class="btn-small">Order Now</a>
+            </div>
+        </div>
+        <div class="product-card">
+            <span class="badge new">🆕 New</span>
+            <div class="img-wrap"><img src="bouquet_mixed.jpg" alt="Mixed Donut Bouquet"></div>
+            <div class="body">
+                <h3>Mixed Donut Bouquet</h3>
+                <div class="stars">★★★★★</div>
+                <p class="desc">A variety of donuts beautifully arranged — a brand new bouquet design.</p>
+                <div class="price">Rs 3,500</div>
+                <a href="menu.html#bouquets" class="btn-small">Order Now</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section class="why-us fade-up">
+    <div class="container">
+        <div class="section-title">
+            <h2>Why Choose <span>Baking Mellow</span></h2>
+            <p>We're committed to making every celebration sweeter</p>
+        </div>
+        <div class="why-us-grid">
+            <div class="why-item"><span class="icon">🎂</span><h4>Freshly Baked Daily</h4><p>Every product is made fresh each day, never frozen.</p></div>
+            <div class="why-item"><span class="icon">🍓</span><h4>Premium Ingredients</h4><p>We use only the finest ingredients for the best taste.</p></div>
+            <div class="why-item"><span class="icon">🎨</span><h4>Customized Designs</h4><p>Unique, custom designs for birthdays, weddings, and more.</p></div>
+            <div class="why-item"><span class="icon">🚚</span><h4>Fast Delivery</h4><p>Quick and reliable delivery straight to your doorstep.</p></div>
+            <div class="why-item"><span class="icon">😊</span><h4>100% Satisfaction</h4><p>We guarantee you'll love every bite — or we'll make it right.</p></div>
+            <div class="why-item"><span class="icon">❤️</span><h4>Made With Love</h4><p>Every treat is handcrafted with passion and care.</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- CUSTOMER REVIEWS -->
+<section class="reviews-section fade-up">
+    <div class="section-title">
+        <h2>What Our <span>Customers Say</span></h2>
+        <p>Real reviews from real people who love Baking Mellow</p>
+    </div>
+    <div class="reviews-grid">
+        <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <p>"The cake was absolutely delicious! Everyone at the party loved it. Highly recommended!"</p>
+            <div class="author">— Ayesha</div>
+        </div>
+        <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <p>"Best cupcakes in Sargodha. The buttercream is so creamy and the flavors are amazing."</p>
+            <div class="author">— Sarah</div>
+        </div>
+        <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <p>"The bouquet looked stunning and tasted even better! Perfect gift for my wife."</p>
+            <div class="author">— Hira</div>
+        </div>
+    </div>
+</section>
+
+<!-- IMPROVED FOOTER -->
+<footer class="footer-improved">
     <div class="container">
         <div class="footer-grid">
             <div>
                 <h4>Baking Mellow</h4>
-                <p>Where every celebration is sweeter.</p>
+                <p>Freshly baked with love.</p>
+                <p style="margin-top: 12px;">📍 Sargodha, Pakistan</p>
+                <p>📞 +92 342 6275592</p>
+                <p>✉️ bakingmellow@gmail.com</p>
             </div>
             <div>
                 <h4>Quick Links</h4>
+                <a href="index.html">Home</a><br>
                 <a href="menu.html">Menu</a><br>
                 <a href="about.html">About Us</a><br>
                 <a href="contact.html">Contact</a>
             </div>
             <div>
-                <h4>Contact</h4>
-                <p>📍 Sargodha, Pakistan</p>
-                <p>📞 +92 342 6275592</p>
-                <p>✉️ bakingmellow@gmail.com</p>
+                <h4>Products</h4>
+                <a href="menu.html#cakes">Cakes</a><br>
+                <a href="menu.html#cupcakes">Cupcakes</a><br>
+                <a href="menu.html#donuts">Donuts</a><br>
+                <a href="menu.html#brownies">Brownies</a><br>
+                <a href="menu.html#bouquets">Bouquets</a><br>
+                <a href="menu.html#baskets">Gift Baskets</a>
+            </div>
+            <div>
+                <h4>Stay Sweet 🧁</h4>
+                <p>Subscribe for updates, discounts, and new arrivals.</p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" id="newsletterEmail" placeholder="Your email" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+                <div class="social-icons">
+                    <a href="https://instagram.com/bakingmellow" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://facebook.com/bakingmellow" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="https://pin.it/5APOlEi2Z" target="_blank"><i class="fab fa-pinterest"></i></a>
+                    <a href="https://wa.me/923426275592" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                </div>
             </div>
         </div>
-        <div class="footer-copy">© 2025 Baking Mellow. All Rights Reserved.</div>
+        <div class="footer-copy">© 2026 Baking Mellow. Designed by Meerab Imran.</div>
     </div>
 </footer>
+
+<!-- SCROLL ANIMATION SCRIPT (Intersection Observer) -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const fadeElements = document.querySelectorAll('.fade-up');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        fadeElements.forEach(el => observer.observe(el));
+    });
+</script>
+
+<!-- NEWSLETTER FORM SUBMISSION SCRIPT -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const newsletterForm = document.getElementById('newsletterForm');
+        
+        if (newsletterForm) {
+            newsletterForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const emailInput = document.getElementById('newsletterEmail');
+                const email = emailInput.value.trim();
+                
+                // Basic email validation
+                if (!email || !email.includes('@') || !email.includes('.')) {
+                    alert('⚠️ Please enter a valid email address.');
+                    return;
+                }
+
+                try {
+                    const response = await fetch('/api/newsletter/subscribe', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        alert('✅ ' + data.message);
+                        emailInput.value = ''; // Clear the input
+                    } else {
+                        alert('❌ ' + data.message);
+                    }
+                } catch (error) {
+                    alert('❌ Connection error. Please check your internet and try again.');
+                    console.error('Newsletter error:', error);
+                }
+            });
+        }
+    });
+</script>
 
 </body>
 </html>

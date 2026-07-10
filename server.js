@@ -1,11 +1,21 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const cookieParser = require('cookie-parser');
-const path = require('path');
-require('dotenv').config();
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const path = require("path");
+require("dotenv").config();
 
 const app = express();
+
+// =======================
+// Debug Environment Variables
+// =======================
+console.log("================================");
+console.log("NODE_ENV:", process.env.NODE_ENV);
+console.log("PORT:", process.env.PORT);
+console.log("MONGO_URI:", process.env.MONGO_URI);
+console.log("JWT_SECRET:", process.env.JWT_SECRET);
+console.log("================================");
 
 // =======================
 // Middleware
@@ -20,60 +30,62 @@ app.use(cors({
 }));
 
 // =======================
-// Serve Static Files
+// Static Files
 // =======================
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 
 // =======================
-// API Routes
+// Routes
 // =======================
-const authRoutes = require('./routes/auth');
-const orderRoutes = require('./routes/orders');
-const contactRoutes = require('./routes/contact');
+const authRoutes = require("./routes/auth");
+const orderRoutes = require("./routes/orders");
+const contactRoutes = require("./routes/contact");
 
-app.use('/api/auth', authRoutes);
-app.use('/api/orders', orderRoutes);
-app.use('/api/contact', contactRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/orders", orderRoutes);
+app.use("/api/contact", contactRoutes);
 
 // =======================
 // Frontend Routes
 // =======================
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 // =======================
 // MongoDB Connection
 // =======================
-let isConnected = false;
-
 async function connectDB() {
-    if (isConnected) return;
-
     try {
-        await mongoose.connect(process.env.MONGO_URI);
-        isConnected = true;
-        console.log('✅ MongoDB Connected Successfully');
+        console.log("Connecting to MongoDB...");
+
+        await mongoose.connect(process.env.MONGO_URI, {
+            serverSelectionTimeoutMS: 10000
+        });
+
+        console.log("✅ MongoDB Connected Successfully");
+
     } catch (err) {
-        console.error('❌ MongoDB Connection Error');
+        console.error("❌ MongoDB Connection Error");
         console.error(err);
     }
 }
 
-connectDB();
-
 // =======================
-// Local Development
+// Start Server
 // =======================
 const PORT = process.env.PORT || 3000;
 
-if (require.main === module) {
+async function startServer() {
+
+    await connectDB();
+
     app.listen(PORT, () => {
-        console.log(`🚀 Server running at http://localhost:${PORT}`);
+        console.log(`🚀 Server running on http://localhost:${PORT}`);
     });
+
 }
 
-// =======================
-// Export for Vercel
-// =======================
+startServer();
+
 module.exports = app;

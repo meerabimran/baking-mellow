@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Account – BakingMellow</title>
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
     .account-container { max-width: 900px; margin: 50px auto; display: flex; gap: 40px; flex-wrap: wrap; padding: 0 20px; }
     .box { flex: 1; min-width: 280px; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
@@ -53,11 +54,50 @@
   </div>
 </div>
 
-<footer>
-    <p>📍 Sargodha, Pakistan</p>
-    <p>📞 +92 342 6275592 | 📧 bakingmellow@gmail.com</p>
-    <p>© 2025 BakingMellow | Powered by MEERAB IMRAN</p>
+<!-- REPLACE the old <footer> with this: -->
+<footer class="footer-improved">
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <h4>Baking Mellow</h4>
+                <p>Freshly baked with love.</p>
+                <p style="margin-top: 12px;">📍 Sargodha, Pakistan</p>
+                <p>📞 +92 342 6275592</p>
+                <p>✉️ bakingmellow@gmail.com</p>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a><br>
+                <a href="menu.html">Menu</a><br>
+                <a href="about.html">About Us</a><br>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div>
+                <h4>Products</h4>
+                <a href="menu.html#cakes">Cakes</a><br>
+                <a href="menu.html#cupcakes">Cupcakes</a><br>
+                <a href="menu.html#donuts">Donuts</a><br>
+                <a href="menu.html#brownies">Brownies</a><br>
+                <a href="menu.html#bouquets">Bouquets</a><br>
+                <a href="menu.html#baskets">Gift Baskets</a>
+            </div>
+            <div>
+                <h4>Stay Sweet 🧁</h4>
+                <p>Subscribe for updates, discounts, and new arrivals.</p>
+                <form class="newsletter-form" onsubmit="event.preventDefault(); alert('✅ Subscribed! (Demo)');">
+                    <input type="email" placeholder="Your email" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+                <div class="social-icons">
+                    <a href="https://instagram.com/bakingmellow" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://facebook.com/bakingmellow" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="https://pin.it/5APOlEi2Z" target="_blank"><i class="fab fa-pinterest"></i></a>
+                    <a href="https://wa.me/923426275592" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copy">© 2026 Baking Mellow. Designed by Meerab Imran.</div>
+    </div>
 </footer>
-
 </body>
 </html>

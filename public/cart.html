@@ -4,67 +4,363 @@
 <meta charset="UTF-8">
 <title>Your Cart - Baking Mellow</title>
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
-    .cart-container { max-width: 900px; margin: 50px auto; padding: 0 20px; }
-    h1 { text-align: center; color: #5c4636; margin-bottom: 30px; }
-    table { width: 100%; border-collapse: collapse; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-    th, td { padding: 15px; text-align: center; border-bottom: 1px solid #eee; }
-    th { background: #b69b72; color: white; }
-    .remove { color: #ff4d4d; cursor: pointer; font-weight: bold; transition: 0.3s; }
-    .remove:hover { color: red; transform: scale(1.2); }
-    .total { text-align: right; font-size: 22px; color: #4b2e2e; padding: 20px 10px; font-weight: bold; }
-    .checkout { display: block; width: 200px; margin: 20px auto; text-align: center; padding: 12px; background: #5C4033; color: white; text-decoration: none; border-radius: 30px; transition: 0.3s; }
-    .checkout:hover { background: #b69b72; transform: scale(1.02); }
-    .empty-msg { text-align: center; padding: 40px; color: #888; font-size: 18px; }
+  .cart-page {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 0 20px;
+  }
+  .cart-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .cart-header h1 { font-size: 38px; color: #3a2c24; }
+  .cart-header h1 span { color: #b69b72; }
+  .cart-header p { color: #7a6f68; font-size: 16px; }
+
+  .cart-wrapper {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+  }
+
+  /* Cart Items */
+  .cart-items {
+    background: white;
+    border-radius: 24px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    border: 1px solid rgba(0,0,0,0.02);
+  }
+  .cart-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 18px 0;
+    border-bottom: 1px solid #f5f1ee;
+    flex-wrap: wrap;
+  }
+  .cart-item:last-child { border-bottom: none; }
+  .cart-item .item-info { flex: 1; min-width: 140px; }
+  .cart-item .item-info h4 { font-size: 18px; color: #3a2c24; margin-bottom: 4px; }
+  .cart-item .item-info p { color: #7a6f68; font-size: 14px; margin: 0; }
+  .cart-item .item-price { font-weight: 700; color: #3a2c24; font-size: 16px; min-width: 80px; }
+  .cart-item .item-qty {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #f5f1ee;
+    padding: 4px 14px;
+    border-radius: 30px;
+  }
+  .cart-item .item-qty button {
+    border: none;
+    background: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #8b6a4f;
+    transition: 0.2s;
+  }
+  .cart-item .item-qty button:hover { color: #3a2c24; transform: scale(1.1); }
+  .cart-item .item-qty span { font-weight: 700; font-size: 16px; min-width: 20px; text-align: center; }
+  .cart-item .remove-btn {
+    color: #e74c3c;
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.3s;
+    background: none;
+    border: none;
+  }
+  .cart-item .remove-btn:hover { transform: scale(1.2); color: #c0392b; }
+
+  /* Summary Sidebar */
+  .cart-summary {
+    background: white;
+    border-radius: 24px;
+    padding: 30px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    border: 1px solid rgba(0,0,0,0.02);
+    height: fit-content;
+  }
+  .cart-summary h3 { font-size: 22px; color: #3a2c24; margin-bottom: 20px; }
+  .cart-summary .row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    color: #5a4c44;
+    font-size: 15px;
+  }
+  .cart-summary .row.total {
+    font-size: 22px;
+    font-weight: 700;
+    color: #3a2c24;
+    border-top: 2px solid #f5f1ee;
+    margin-top: 10px;
+    padding-top: 18px;
+  }
+  .cart-summary .row.total span:last-child { color: #b69b72; }
+  .checkout-btn {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    background: #3a2c24;
+    color: white;
+    text-align: center;
+    border: none;
+    border-radius: 12px;
+    font-size: 17px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: 0.3s;
+    margin-top: 20px;
+  }
+  .checkout-btn:hover {
+    background: #b69b72;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(182,155,114,0.25);
+  }
+  .continue-shopping {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    color: #7a6f68;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.3s;
+  }
+  .continue-shopping:hover { color: #b69b72; }
+
+  .empty-cart {
+    text-align: center;
+    padding: 60px 20px;
+    color: #7a6f68;
+  }
+  .empty-cart .icon { font-size: 64px; display: block; margin-bottom: 20px; }
+  .empty-cart a { color: #b69b72; font-weight: 700; text-decoration: none; }
+
+  @media (max-width: 768px) {
+    .cart-wrapper { grid-template-columns: 1fr; }
+    .cart-item { flex-wrap: wrap; }
+    .cart-item .item-info { width: 100%; }
+  }
 </style>
 </head>
 <body>
 
 <nav class="navbar">
-    <div class="nav-links">
-        <div class="logo"><a href="index.html"><img src="logo.png" alt="Baking Mellow"></a></div>
-        <a href="index.html">Home</a>
-        <a href="menu.html">Menu</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-    </div>
-    <div class="icons">
-        <a href="signup.html">👤</a>
-        <a href="login.html">🔑</a>
-        <a href="cart.html">🛒</a>
-    </div>
+  <div class="nav-links">
+    <a href="index.html" class="logo">
+      <img src="logo.png" alt="Baking Mellow">
+      <span class="logo-text">Baking Mellow</span>
+    </a>
+    <a href="index.html">Home</a>
+    <a href="menu.html">Menu</a>
+    <a href="about.html">Our Story</a>
+    <a href="social.html">Connect</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <div class="icons">
+    <a href="signup.html">👤</a>
+    <a href="login.html">🔑</a>
+    <a href="cart.html">🛒</a>
+  </div>
 </nav>
 
-<div class="cart-container">
-    <h1>🛒 Your Cart</h1>
-    <table>
-        <thead><tr><th>Product</th><th>Option</th><th>Qty</th><th>Price</th><th>Remove</th></tr></thead>
-        <tbody id="cartItems"></tbody>
-    </table>
-    <div class="total">Total: Rs <span id="totalPrice">0</span></div>
-    <a href="checkout.html" class="checkout">Proceed to Checkout</a>
+<!-- Added fade-up class for scroll animation -->
+<div class="cart-page fade-up">
+  <div class="cart-header">
+    <h1>🛒 Your <span>Cart</span></h1>
+    <p>Review your items and proceed to checkout</p>
+  </div>
+
+  <div id="cartContent">
+    <!-- Cart will be rendered here by JavaScript -->
+  </div>
 </div>
 
-<script>
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-let tbody = document.getElementById("cartItems");
-let total = 0;
+<!-- IMPROVED FOOTER (Fixed Newsletter Form) -->
+<footer class="footer-improved">
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <h4>Baking Mellow</h4>
+                <p>Freshly baked with love.</p>
+                <p style="margin-top: 12px;">📍 Sargodha, Pakistan</p>
+                <p>📞 +92 342 6275592</p>
+                <p>✉️ bakingmellow@gmail.com</p>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a><br>
+                <a href="menu.html">Menu</a><br>
+                <a href="about.html">About Us</a><br>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div>
+                <h4>Products</h4>
+                <a href="menu.html#cakes">Cakes</a><br>
+                <a href="menu.html#cupcakes">Cupcakes</a><br>
+                <a href="menu.html#donuts">Donuts</a><br>
+                <a href="menu.html#brownies">Brownies</a><br>
+                <a href="menu.html#bouquets">Bouquets</a><br>
+                <a href="menu.html#baskets">Gift Baskets</a>
+            </div>
+            <div>
+                <h4>Stay Sweet 🧁</h4>
+                <p>Subscribe for updates, discounts, and new arrivals.</p>
+                <!-- Fixed: Removed demo alert, added IDs for backend connection -->
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" id="newsletterEmail" placeholder="Your email" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+                <div class="social-icons">
+                    <a href="https://instagram.com/bakingmellow" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://facebook.com/bakingmellow" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="https://pin.it/5APOlEi2Z" target="_blank"><i class="fab fa-pinterest"></i></a>
+                    <a href="https://wa.me/923426275592" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copy">© 2026 Baking Mellow. Designed by Meerab Imran.</div>
+    </div>
+</footer>
 
-if(cart.length === 0) {
-  tbody.innerHTML = `<tr><td colspan="5" class="empty-msg">Your cart is empty. 🧁 <a href="menu.html" style="color:#b69b72;">Shop now!</a></td></tr>`;
-} else {
-  cart.forEach((item, index) => {
-    let row = document.createElement("tr");
-    let itemTotal = item.price * item.qty;
-    total += itemTotal;
-    row.innerHTML = `
-      <td>${item.name}</td><td>${item.option}</td><td>${item.qty}</td>
-      <td>Rs ${itemTotal}</td><td class="remove" onclick="removeItem(${index})">✖</td>`;
-    tbody.appendChild(row);
-  });
-}
-document.getElementById("totalPrice").innerText = total;
-function removeItem(index){ cart.splice(index,1); localStorage.setItem("cart", JSON.stringify(cart)); location.reload(); }
+<script>
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const container = document.getElementById("cartContent");
+
+  function renderCart() {
+    if (cart.length === 0) {
+      container.innerHTML = `
+        <div class="empty-cart">
+          <span class="icon">🧁</span>
+          <h3>Your cart is empty</h3>
+          <p>Looks like you haven't added anything yet.</p>
+          <a href="menu.html">Browse our menu →</a>
+        </div>
+      `;
+      return;
+    }
+
+    let total = 0;
+    let itemsHtml = '';
+
+    cart.forEach((item, index) => {
+      const itemTotal = item.price * item.qty;
+      total += itemTotal;
+      itemsHtml += `
+        <div class="cart-item">
+          <div class="item-info">
+            <h4>${item.name}</h4>
+            <p>${item.option}</p>
+          </div>
+          <div class="item-qty">
+            <button onclick="updateQty(${index}, -1)">−</button>
+            <span>${item.qty}</span>
+            <button onclick="updateQty(${index}, 1)">+</button>
+          </div>
+          <div class="item-price">Rs ${itemTotal}</div>
+          <button class="remove-btn" onclick="removeItem(${index})">✖</button>
+        </div>
+      `;
+    });
+
+    container.innerHTML = `
+      <div class="cart-wrapper">
+        <div class="cart-items">${itemsHtml}</div>
+        <div class="cart-summary">
+          <h3>Order Summary</h3>
+          <div class="row"><span>Subtotal</span><span>Rs ${total}</span></div>
+          <div class="row"><span>Delivery</span><span>Free</span></div>
+          <div class="row total"><span>Total</span><span>Rs ${total}</span></div>
+          <a href="checkout.html" class="checkout-btn">Proceed to Checkout</a>
+          <a href="menu.html" class="continue-shopping">← Continue Shopping</a>
+        </div>
+      </div>
+    `;
+  }
+
+  function updateQty(index, change) {
+    const newQty = cart[index].qty + change;
+    if (newQty < 1) return;
+    cart[index].qty = newQty;
+    localStorage.setItem("cart", JSON.stringify(cart));
+    renderCart();
+  }
+
+  function removeItem(index) {
+    cart.splice(index, 1);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    renderCart();
+  }
+
+  renderCart();
 </script>
+
+<!-- SCROLL ANIMATION SCRIPT -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const fadeElements = document.querySelectorAll('.fade-up');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        fadeElements.forEach(el => observer.observe(el));
+    });
+</script>
+
+<!-- NEWSLETTER FORM SUBMISSION SCRIPT -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const newsletterForm = document.getElementById('newsletterForm');
+        
+        if (newsletterForm) {
+            newsletterForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const emailInput = document.getElementById('newsletterEmail');
+                const email = emailInput.value.trim();
+                
+                // Basic email validation
+                if (!email || !email.includes('@') || !email.includes('.')) {
+                    alert('⚠️ Please enter a valid email address.');
+                    return;
+                }
+
+                try {
+                    const response = await fetch('/api/newsletter/subscribe', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        alert('✅ ' + data.message);
+                        emailInput.value = ''; // Clear the input
+                    } else {
+                        alert('❌ ' + data.message);
+                    }
+                } catch (error) {
+                    alert('❌ Connection error. Please check your internet and try again.');
+                    console.error('Newsletter error:', error);
+                }
+            });
+        }
+    });
+</script>
+
 </body>
 </html>
